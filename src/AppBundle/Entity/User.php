@@ -5,14 +5,13 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
-
 /**
  * User
  *
  * @ORM\Table(name="app_user")
  * @ORM\Entity
  * @ORM\MappedSuperclass()
-*/
+ */
 class User extends BaseUser
 {
     /**
