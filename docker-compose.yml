@@ -1,0 +1,36 @@
+version: '2.2'
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    links:
+      - mysql
+    expose:
+      - "80"
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+#todo: fix the sql - cannot connect to that shit
+  mysql:
+      image: mysql:5.7
+      restart: always
+      environment:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: symfony
+          MYSQL_USER: user
+          MYSQL_PASSWORD: pass
+      mem_limit: 1G
+      expose:
+          - "3306"
+      ports:
+        - "3306:3306"
+
+
+  adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8080:8080
