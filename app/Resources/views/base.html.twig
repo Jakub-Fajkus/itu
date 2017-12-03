@@ -6,8 +6,13 @@
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
+    {% if jsController is defined and jsAction is defined%}
+        <input type="hidden" data-controller="name" value="{{ jsController }}">
+        <input type="hidden" data-controller="action" value="{{ jsAction }}">
+    {% endif %}
     <body>
         {% block body %}{% endblock %}
+        <script type="application/javascript" src="{{ asset('js/dist/bundle.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

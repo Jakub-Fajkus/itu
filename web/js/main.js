@@ -1,3 +1,3 @@
-import _ from 'lodash';
+import router from './controllers/router';
 
-_.each([1,2,3], val => console.log(val));
+router.start();
