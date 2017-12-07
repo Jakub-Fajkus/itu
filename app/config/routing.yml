@@ -1,3 +1,15 @@
+app_task:
+    resource: "@AppBundle/Controller/TaskController.php"
+    type:     annotation
+
+app_project:
+    resource: "@AppBundle/Controller/ProjectController.php"
+    type:     annotation
+
+app_tag:
+    resource: "@AppBundle/Controller/TagController.php"
+    type:     annotation
+
 admin:
     resource: "@AdminBundle/Controller/"
     type:     annotation
