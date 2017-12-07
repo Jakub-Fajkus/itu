@@ -1,5 +1,4 @@
 import controllers from './controllers';
-import $ from 'jquery';
 
 function start() {
     let controllerName = $('[data-controller="name"]').val(),

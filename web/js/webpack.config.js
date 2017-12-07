@@ -2,7 +2,7 @@ const path = require('path');
 const JS_ROOT = path.resolve(__dirname);
 
 module.exports = {
-    entry: ['babel-polyfill', 'fetch-polyfill', path.join(JS_ROOT, 'main.js')],
+    entry: ['babel-polyfill', path.join(JS_ROOT, 'main.js')],
     output: {
         path: path.join(JS_ROOT, 'dist'),
         filename: 'bundle.js'
@@ -21,7 +21,7 @@ module.exports = {
                         ]
                     }
                 }]
-            }
+            },
         ],
     },
     resolve: {

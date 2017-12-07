@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            {#http://api.jqueryui.com/sortable/#}
+            <ul id="sortable1" data-sortable="{{ {url:path('setSortedExample') , settings: {placeholder: 'ui-state-highlight'} }|json_encode }}">
+                <li data-sort-name="name1" class="ui-state-default">Item 1</li>
+                <li data-sort-name="name2" class="ui-state-default">Item 2</li>
+                <li data-sort-name="name3" class="ui-state-default">Item 3</li>
+                <li data-sort-name="name4" class="ui-state-default">Item 4</li>
+                <li data-sort-name="name5" class="ui-state-default">Item 5</li>
+            </ul>
+
+            <div id="sortable2" data-sortable="{{ {'url':path('setSortedExample'), settings: {} }|json_encode }}">
+                <div data-sort-name="name1" class="ui-state-default">Item 1</div>
+                <div data-sort-name="name2" class="ui-state-default">Item 2</div>
+                <div data-sort-name="name3" class="ui-state-default">Item 3</div>
+                <div data-sort-name="name4" class="ui-state-default">Item 4</div>
+                <div data-sort-name="name5" class="ui-state-default">Item 5</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+    body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
+    h1, h2 { line-height: 1.2; margin: 0 0 .5em; }
+    h1 { font-size: 36px; }
+    h2 { font-size: 21px; margin-bottom: 1em; }
+    p { margin: 0 0 1em 0; }
+    a { color: #0000F0; }
+    a:hover { text-decoration: none; }
+    code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break-word; }
+    #wrapper { background: #FFF; margin: 1em auto; max-width: 800px; width: 95%; }
+    #container { padding: 2em; }
+</style>
+{% endblock %}

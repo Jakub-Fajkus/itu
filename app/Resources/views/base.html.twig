@@ -5,13 +5,19 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" href="{{ asset('jquery/jquery-ui.css') }}">
+        <script src="{{ asset('jquery/jquery-1.12.4.js') }}"></script>
+        <script src="{{ asset('jquery/jquery-1.12.1-ui.js') }}"></script>
     </head>
     {% if jsController is defined and jsAction is defined%}
         <input type="hidden" data-controller="name" value="{{ jsController }}">
         <input type="hidden" data-controller="action" value="{{ jsAction }}">
     {% endif %}
     <body>
-        {% block body %}{% endblock %}
+
+
+
+    {% block body %}{% endblock %}
         <script type="application/javascript" src="{{ asset('js/dist/bundle.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
