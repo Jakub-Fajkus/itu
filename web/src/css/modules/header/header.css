@@ -15,3 +15,14 @@ $(el) {
   height: 50px;
   background-color: #000000bd;
 }
+
+
+@media all and ($medium-up) {
+  .cwrapper {
+    padding-top: 0;
+  }
+
+  $(el) {
+    position: relative;
+  }
+}

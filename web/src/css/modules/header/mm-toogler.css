@@ -42,17 +42,8 @@ $(el) {
   }
 }
 
-@media all and (min-width: $break-mobile-nav-min) {
-
-  $(el) {
-    position: absolute;
-    top: 54px;
-    border: none;
-  }
-}
 
 @media all and ($medium-up) {
-
   $(el) {
     display: none;
   }
