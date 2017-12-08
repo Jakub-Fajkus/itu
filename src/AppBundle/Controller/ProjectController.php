@@ -127,7 +127,7 @@ class ProjectController extends Controller
      * Zmeni poradi vsech projektu
      *
      * @Route("/reorder/",  name="project_reorder")
-     * @Method({"POST", "GET"})
+     * @Method({"POST"})
      *
      * @param Request $request
      * @return JsonResponse
@@ -147,7 +147,7 @@ class ProjectController extends Controller
      * Zmeni poradi tasku v urcitem projektu
      *
      * @Route("/{id}/reorder", name="project_reorder_tasks")
-     * @Method({"POST", "GET"})
+     * @Method({"POST"})
      *
      * @param Request $request
      * @return JsonResponse
