@@ -1,0 +1,90 @@
+$el: .ts;
+
+$(el) {
+  position: relative;
+  margin: 6px 0;
+  padding: 8px;
+  font-size: 12px;
+  border: 1px solid #e4e4e4;
+  background-color: #efefef;
+
+  &__title {
+    position: relative;
+    overflow: hidden;
+    margin: 0 30px 8px 0;
+    padding: 6px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-radius: 3px;
+    background-color: #fff;
+  }
+
+  &__priority {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    background-color: #c7c7c7;
+
+    &--1 {
+      background-color: #f10202;
+    }
+    &--2 {
+      background-color: #f77373;
+    }
+    &--3 {
+      background-color: #f7ce73;
+    }
+    &--4 {
+      background-color: #b0dcf7;
+    }
+  }
+
+  input[type=checkbox] {
+    display: none;
+
+    &:checked + .ts__checkbox {
+      background-color: black;
+
+      &:after {
+        content: "\2713";
+        display: block;
+      }
+    }
+  }
+
+  &__checkbox {
+    position: absolute;
+    top: 9px;
+    right: 4px;
+    width: 28px;
+    height: 28px;
+    border: 1px solid #e4e4e4;
+    border-radius: 14px;
+    background-color: #fff;
+  }
+
+  &__adons {
+    position: relative;
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0px;
+      display: block;
+      width: 80%;
+      height: 1px;
+      background-color: #d0d0d0;
+    }
+
+    span {
+      display: inline-block;
+      margin-right: 6px;
+      font-weight: 600;
+      vertical-align: middle;
+    }
+  }
+}
+
+@media all and ($medium-up) {
+
+}
