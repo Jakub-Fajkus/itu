@@ -34,8 +34,8 @@ class TaskType extends AbstractType
             ])
             ->add('project')
             ->add('tags', EntityType::class, ['class' => Tag::class, 'multiple' => true, 'expanded' => 'true'])
-            ->add('submit', SubmitType::class);
-
+//            ->add('submit', SubmitType::class, ['label' => 'Upravit']);
+            ;
 
         $builder->get('due')->addModelTransformer(new CallbackTransformer(
             function (?\DateTime $datetime) {
