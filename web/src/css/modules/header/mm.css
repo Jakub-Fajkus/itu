@@ -46,7 +46,7 @@ $(el) {
     &__wrapper {
       position: relative;
       top: 50px;
-      display: block;
+      display: none;
       width: auto;
       margin: 0 auto;
       transform: translate3D(0,0,0);

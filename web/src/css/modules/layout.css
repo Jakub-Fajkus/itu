@@ -14,7 +14,7 @@ html {
 }
 
 /* default form */
-input, textarea, select {
+/* input, textarea, select {
   -webkit-appearance: none;
 }
 
@@ -37,7 +37,7 @@ input[type=number]::-webkit-inner-spin-button {
 
 input[type=number] {
   -moz-appearance: textfield;
-}
+} */
 
 /* textarea {
   resize: none;
