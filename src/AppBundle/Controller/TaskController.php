@@ -17,7 +17,11 @@ use AppBundle\Form\TaskType;
  */
 class TaskController extends Controller
 {
-    //todo: JS posila datum jako timestamp
+    //todo:
+//    new project -> cely project s taskama
+//    new task -> cely projekt s taskama
+//    edit project -> cely project s taskama
+//    edit task -> cely projekt s taskama
 
     /**
      * Lists all task entities.
@@ -46,7 +50,9 @@ class TaskController extends Controller
     {
         $form = $this->createForm(TaskType::class);
 
-        return $this->render('task/newForm.html.twig', ['form' => $form->createView()]);
+        $html = $this->render('task/newForm.html.twig', ['form' => $form->createView()]);
+
+        return new JsonResponse(['html' => $html]);
     }
 
     /**
@@ -55,9 +61,11 @@ class TaskController extends Controller
      */
     public function getEditFormAction(Task $task)
     {
-        $form = $this->createForm(TaskType::class, $task);
+        $form = $this->createForm(TaskType::class, $task, ['action' => $this->generateUrl('task_edit', ['id' => $task->getId()])]);
 
-        return $this->render('task/editForm.html.twig', ['form' => $form->createView()]);
+        $html = $this->renderView('task/editForm.html.twig', ['form' => $form->createView()]);
+
+        return new JsonResponse(['html' => $html]);
     }
 
     /**
@@ -114,23 +122,22 @@ class TaskController extends Controller
      */
     public function editAction(Request $request, Task $task)
     {
-        $deleteForm = $this->createDeleteForm($task);
         $editForm = $this->createForm(TaskType::class, $task);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('task_edit', ['id' => $task->getId()]);
-        }
+            //todo: vratit cely projekt
+            return $this->render("task/show.html.twig", ['task' => $task]);
+        } else {
+            $msg = '';
+            foreach ($editForm->getErrors(true) as $error) {
+                $msg .= $error->getMessage();
+            }
 
-        return $this->render('task/edit.html.twig', [
-            'task' => $task,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-            'jsController' => 'TaskController',
-            'jsAction' => 'editAction',
-        ]);
+            return new JsonResponse(['status' => ProjectController::ERROR, 'flashMessage' => $msg]);
+        }
     }
 
     /**
@@ -151,7 +158,7 @@ class TaskController extends Controller
         $em->persist($task);
         $em->flush();
 
-        return new JsonResponse(['message' => 'Označeno jako hotovo', 'status' => ProjectController::SUCCESS]);
+        return new JsonResponse(['flashMessage' => 'Označeno jako hotovo', 'status' => ProjectController::SUCCESS]);
     }
 
 
