@@ -1,0 +1,4 @@
+services:
+     AppBundle\Services\ProjectReorder:
+        class: AppBundle\Services\ProjectReorder
+        autowire: true

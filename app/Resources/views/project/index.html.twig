@@ -8,6 +8,7 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
+                <th>Order</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -16,6 +17,7 @@
             <tr>
                 <td><a href="{{ path('project_show', { 'id': project.id }) }}">{{ project.id }}</a></td>
                 <td>{{ project.name }}</td>
+                <td>{{ project.order }}</td>
                 <td>
                     <ul>
                         <li>

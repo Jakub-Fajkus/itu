@@ -38,6 +38,11 @@ class Project
      */
     private $tasks;
 
+    /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=false, name="project_order")
+     */
+    private $order = 0;
 
     /**
      * Get id
@@ -86,7 +91,7 @@ class Project
      * @param Task $task
      * @return $this
      */
-    public function addTask(Task $task) : Project
+    public function addTask(Task $task): Project
     {
         if (!$this->tasks->contains($task)) {
             $this->tasks->add($task);
@@ -100,17 +105,40 @@ class Project
      * @param Task $task
      * @return $this
      */
-    public function removeTask(Task $task) : Project
+    public function removeTask(Task $task): Project
     {
         $this->tasks->remove($task);
 
         return $this;
     }
 
+
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->name;
     }
 
 
+    /**
+     * @return int
+     */
+    public function getOrder(): int
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param int $order
+     *
+     * @return Project
+     */
+    public function setOrder(int $order): Project
+    {
+        $this->order = $order;
+
+        return $this;
+    }
 }

@@ -10,4 +10,16 @@ namespace AppBundle\Repository;
  */
 class ProjectRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getByIds(array $ids)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT p 
+                     FROM AppBundle:Project p
+                     WHERE p.id IN :ids
+                     ORDER BY p.id ASC'
+            )
+            ->setParameter('ids', implode(', ', $ids))
+            ->getResult();
+    }
 }

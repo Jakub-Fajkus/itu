@@ -69,6 +69,13 @@ class Task
      */
     private $tags;
 
+    /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $order;
+
+
 
     /**
      * Task constructor.
@@ -78,6 +85,7 @@ class Task
         $this->createdAt = new \DateTime();
         $this->tags = new ArrayCollection();
         $this->due = new \DateTime();
+        $this->order = 0;
     }
 
 
@@ -249,5 +257,24 @@ class Task
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrder(): int
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param int $order
+     * @return Task
+     */
+    public function setOrder(int $order): Task
+    {
+        $this->order = $order;
+
+        return $this;
     }
 }
