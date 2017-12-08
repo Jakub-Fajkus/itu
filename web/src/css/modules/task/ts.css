@@ -44,11 +44,15 @@ $(el) {
     display: none;
 
     &:checked + .ts__checkbox {
-      background-color: black;
+      background-color: $green-color;
 
       &:after {
         content: "\2713";
         display: block;
+        margin: 3px 0;
+        font-size: 18px;
+        text-align: center;
+        color: #fff;
       }
     }
   }
@@ -62,10 +66,20 @@ $(el) {
     border: 1px solid #e4e4e4;
     border-radius: 14px;
     background-color: #fff;
+
+    &:after {
+      content: "\2713";
+      display: block;
+      margin: 3px 0;
+      font-size: 18px;
+      text-align: center;
+      color: #e8e8e8;
+    }
   }
 
   &__adons {
     position: relative;
+
     &:after {
       content: '';
       position: absolute;

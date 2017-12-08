@@ -25,6 +25,10 @@ $(el) {
     }
   }
 
+  &__header {
+    cursor: move;
+  }
+
   &__action {
     float: right;
   }

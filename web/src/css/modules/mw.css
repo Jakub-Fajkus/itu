@@ -33,8 +33,11 @@ $(el) {
     position: relative;
     z-index: calc($zindex-modal-window + 2);
     overflow-y: auto;
-    padding: $modal-default-padding;
-    background: url('/images/modal-bg.png') $modal-default-background no-repeat top left;
+    width: 100%;
+    min-height: 100px;
+    margin: 16px;
+    padding: 20px;
+    background: #fff;
 
     &__wrap {
       position: fixed;
@@ -46,20 +49,8 @@ $(el) {
       overflow-x: hidden;
       overflow-y: auto;
       outline: 0;
+      background-color: #0000007a;
       -webkit-overflow-scrolling: touch;
-    }
-
-    h1, h2 {
-      padding: 0 0 30px 0;
-      font-size: 20px;
-      font-weight: 600;
-      text-align: center;
-      color: $default-text-color;
-
-      &.no-line {
-        padding-bottom: 0;
-        border-bottom: 0 none;
-      }
     }
   }
 }

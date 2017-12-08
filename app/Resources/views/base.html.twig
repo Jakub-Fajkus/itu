@@ -49,7 +49,7 @@
 		<div class="page-wrapper">
 
 			<header class="header h">
-				<input type="checkbox" class="mm-toogle__input input-hidden" id="mm-toogler__input">
+				<input type="checkbox" class="mm-toogle__input hidden" id="mm-toogler__input">
 				<label for="mm-toogler__input" class="mm-toogler">
 					<span class="mm-toogler__btn"></span>
 					<span class="mm-toogler__btn"></span>
@@ -77,6 +77,20 @@
 
 			<footer class="footer">
 			</footer>
+
+			{# Template for flash messages use clases for msg: fl__msg--info, fl__msg--error, fl__msg--success, fl__msg--warning #}
+			<div class="fl__wrap hidden" data-selector="flashMsgWrapper">
+			</div>
+
+			{# Modal window template, add mw--active for show #}
+			<div class="mw">
+				<div class="mw__content__wrap">
+					<a href="#" class="mw__close"></a>
+					<div class="mw__content">
+						gvhbjnk
+					</div>
+				</div>
+			</div>
 
 			<script type="application/javascript" src="{{ asset('js/dist/bundle.js') }}"></script>
 			{% block javascripts %}

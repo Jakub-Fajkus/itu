@@ -8,7 +8,8 @@
 				<div class="pr__header">
 					<h2 class="pr__title">{{ project.name }}</h2>
 					<div class="pr__action">
-						<a href="#">E</a>
+						{# TODO open edit project #}
+						<a href="#" class="btn--edit"></a>
 					</div>
 				</div>
 
@@ -56,5 +57,9 @@
 			</div>
 		{% endfor %}
 		</div>
+	</div>
+
+	<div class="add_wrapper">
+		<button class="btn--fixed-add"></button>
 	</div>
 {% endblock %}

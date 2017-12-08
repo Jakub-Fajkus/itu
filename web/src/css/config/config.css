@@ -13,6 +13,8 @@ $wide-up: (min-width: 1200px);
 
 $container-width: 1000px;
 
+$zindex-modal-window: 9999;
+
 $font-main: "Trebuchet MS", Tahoma, sans-serif;
 
 
@@ -20,6 +22,7 @@ $body-background-color: #fff;
 $default-text-color: #000;
 $link-color: #1fb7e4;
 $active-color: $link-color;
+
 
 $green-color: #16ec00;
 $blue-color: #0086ec;

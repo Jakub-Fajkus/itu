@@ -1,0 +1,8 @@
+.mw__close:before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 24px;
+  background: svg-load('./../../svg/cross.svg'), linear-gradient(transparent, transparent);
+  background-size: cover;
+}

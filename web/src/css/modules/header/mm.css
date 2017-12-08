@@ -45,8 +45,8 @@ $(el) {
   $(el) {
     &__wrapper {
       position: relative;
-      top: 50px;
-      display: none;
+      top: 0;
+      display: block;
       width: auto;
       margin: 0 auto;
       transform: translate3D(0,0,0);
@@ -65,14 +65,7 @@ $(el) {
         color: #fff;
 
         &:after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 10%;
-          display: block;
-          width: 80%;
-          height: 1px;
-          background-color: #efefef;
+          content: none;
         }
       }
 
