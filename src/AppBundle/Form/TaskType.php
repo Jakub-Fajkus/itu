@@ -26,7 +26,12 @@ class TaskType extends AbstractType
         $builder
             ->add('name')
             ->add('priority', ChoiceType::class, ['choices' => ['Nízká' => 0, 'Střední' => 1, 'Vysoká' => 2, 'Nejvyšší' => 3]])
-            ->add('due', TextType::class, ['required' => false, 'attr' => ['data-type' => 'datetime',]])
+            ->add('due', TextType::class, [
+                'required' => false,
+                'attr'     => [
+                    'data-type' => 'datetime',
+                ],
+            ])
             ->add('project')
             ->add('tags', EntityType::class, ['class' => Tag::class, 'multiple' => true, 'expanded' => 'true'])
             ->add('submit', SubmitType::class);

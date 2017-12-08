@@ -13,3 +13,4 @@ export default class DefaultController extends BaseController{
         new Form($('[name="appbundle_task"]')[0]);
     }
 }
+// přidat handle přidat dvojklik

@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class Form {
     formElement = undefined;
     $formElement = undefined;
@@ -11,16 +13,35 @@ export default class Form {
             this.$formElement = $(el);
             this.formElement = el;
         }
-        let $outElement = $('[data-type="datetime"]'),
-            $dateElement = $('<input type="text" />'),
-            $timeElement = $('<input type="text" />');
+        let $outElement = $('[data-type="datetime"]');
+        let dateVal = (+(new Date())),
+            timeVal = 0;
+        let oldDate = '', oldTime = '', oldVal = $outElement.val();
+
+
+        if(oldVal && + !isNaN(oldVal))
+        {
+            console.log(+oldVal);
+            let odt = moment(+oldVal * 1000);
+            oldDate = `data-value="${odt.format('YYYY/MM/DD/')}"`;
+            oldTime = `data-value="${odt.format('HH:mm')}"`;
+            let clone = odt.clone();
+            clone.millisecond(0);
+            clone.seconds(0);
+            clone.minutes(0);
+            clone.hours(-1);
+            dateVal = +clone.unix();
+            timeVal = +odt.unix() - dateVal;
+
+        }
+        let $dateElement = $(`<input type="text" ${oldDate}/>`),
+            $timeElement = $(`<input type="text" ${oldTime}/>`);
         $outElement.parent().append($dateElement);
         $outElement.parent().append($timeElement);
         $outElement.hide();
 
-        let dateVal = (+(new Date())),
-            timeVal = 0;
-        $dateElement.pickadate({
+
+        $dateElement.pickadate({ //todo Edit
             formatSubmit: 'yyyy/mm/dd',
             onSet: function (context) {
                 console.log(context.select);
@@ -29,15 +50,15 @@ export default class Form {
         });
         $timeElement.pickatime({
             format: 'H:i',
+            formatSubmit: 'H:i',
             onSet: function (context) {
                 console.log(context.select);
-                timeVal = context.select * 60;
+                timeVal = (context.select + 60) * 60;
             }
         });
         this.$formElement.submit(e => {
             e.preventDefault();
-
-            $outElement.val(dateVal+timeVal);
+            $outElement.val(dateVal + timeVal);
             $.ajax({
                 type: "POST",
                 processData: false,

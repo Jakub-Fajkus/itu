@@ -1,61 +1,65 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-{# 	<p data-selector="someName">selector</p>
-	<p data-multipleSelector="someOtherName">multipleSelector1</p>
-	<p data-multipleSelector="someOtherName">multipleSelector</p> #}
+	<div id="wrapper">
+		<div id="container" data-sortGroup="projects" data-sortable="{{ {url:path('project_reorder') , settings: {placeholder: 'ui-state-highlight'} }|json_encode }}">
+		{% for project in projects %}
+			<div class="pr" data-sort-name="{{ project.id }}">
+				<div class="pr__header">
+					<h2 class="pr__title">{{ project.name }}</h2>
+					<div class="pr__action">
+						{# TODO open edit project #}
+						<a href="#" class="btn--edit"></a>
+					</div>
+				</div>
 
-{% for i in 0..10 %}
-	<div class="pr">
-		<div class="pr__header">
-			<h2 class="pr__title">Název projektu</h2>
-			<div class="pr__action">
-				<a href="#">E</a>
-			</div>
-		</div>
+				<ul data-sortGroup="tasks" class="pr__content" data-sortable="{{ {url:path('project_reorder_tasks', {'id': project.id}) , settings: {placeholder: 'ui-state-highlight', cancel: '[data-not-dragable="true"]'} }|json_encode }}">
 
-		<ul class="pr__content">
-			{% for i in 0..4 %}
+				{% set completed = {} %}
+				{% for task in project.tasks %}
+					{% if task.completed %}
+						{% set completed = completed|merge([task]) %}
+					{% else %}
+						<li data-sort-name="{{ task.id }}" class="ui-state-default ts">
+							{# TODO open edit action #}
+							<a href="#">
+								<p class="ts__title">{{ task.name }}</p>
+							</a>
 
-				<li class="ts">
-					{# open edit action #}
-					<a href="#">
-						<p class="ts__title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores deserunt eaque nobis, tempore error, ipsa</p>
-					</a>
+							<input type="checkbox" class="hidden" id="checkbox-{{ task.id }}">
+							<label for="checkbox-{{ task.id }}" class="ts__checkbox"></label>
 
-						{# hide and send ajax #}
-						<input type="checkbox" class="hidden" id="checkbox-{{i}}">
-						<label for="checkbox-{{i}}" class="ts__checkbox"></label>
+							<div class="ts__adons">
+								<span class="ts__priority ts__priority--{{ task.priority }}"></span>
+								<span class="ts__date">{% if task.createdAt %}{{ task.createdAt|date('Y-m-d H:i:s') }}{% endif %}{% if task.due %} - {{ task.due|date('Y-m-d H:i:s') }}{% endif %}</span>
+							</div>
+						</li>
+					{% endif %}
+				{% endfor %}
+
+				{% for task in completed %}
+					<li data-sort-name="{{ task.id }}" class="ui-state-default ts ts--completed">
+						{# TODO open edit action #}
+						<a href="#">
+							<p class="ts__title">{{ task.name }}</p>
+						</a>
+
+						<input type="checkbox" class="hidden" id="checkbox-{{ task.id }}">
+						<label for="checkbox-{{ task.id }}" class="ts__checkbox"></label>
 
 						<div class="ts__adons">
-							{# add real prirotity #}
-							<span class="ts__priority ts__priority--{{i}}"></span>
-							<span class="ts__date">20.12.2017 - 20.12.2017</span>
+							<span class="ts__priority ts__priority--{{ task.priority }}"></span>
+							<span class="ts__date">{% if task.createdAt %}{{ task.createdAt|date('Y-m-d H:i:s') }}{% endif %}{% if task.due %} - {{ task.due|date('Y-m-d H:i:s') }}{% endif %}</span>
 						</div>
-				</li>
-
-			{% endfor %}
-		</ul>
-	</div>
-{% endfor %}
-
-
-{# <div class="pr">
-	<div class="pr__header">
-		<h2 class="pr__title">{{ project.name }}</h2>
-		<div class="pr__action"></div>
-	</div>
-
-	<div class="pr__content ts">
-		<a href="{{ path('task_edit', { 'id': task.id }) }}">
-			<h3 class="ts__title">{{ task.name }}</h3>
-			<div class="ts__adons">
-				<span class="ts__priority ts__priority--{{ task.priority }}"></span>
-				<span class="ts__date">{% if task.createdAt %}{{ task.createdAt|date('Y-m-d H:i:s') }}{% endif %}</span>
-				<span class="ts__date">{% if task.due %}{{ task.due|date('Y-m-d H:i:s') }}{% endif %}</span>
+					</li>
+				{% endfor %}
+				</ul>
 			</div>
-		</a>
+		{% endfor %}
+		</div>
 	</div>
-</div> #}
-{% endblock %}
 
+	<div class="add_wrapper">
+		<button class="btn--fixed-add"></button>
+	</div>
+{% endblock %}
