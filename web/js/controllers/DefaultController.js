@@ -10,6 +10,6 @@ export default class DefaultController extends BaseController{
 
     formExampleAction()
     {
-        new Form($('[name="appbundle_user"]')[0]);
+        new Form($('[name="appbundle_task"]')[0]);
     }
 }

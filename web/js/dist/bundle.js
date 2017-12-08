@@ -9216,7 +9216,7 @@ var DefaultController = function (_BaseController) {
     }, {
         key: 'formExampleAction',
         value: function formExampleAction() {
-            new _Form2.default($('[name="appbundle_user"]')[0]);
+            new _Form2.default($('[name="appbundle_task"]')[0]);
         }
     }]);
 
@@ -26618,6 +26618,7 @@ var Form = function Form(el) {
     });
     this.$formElement.submit(function (e) {
         e.preventDefault();
+
         $outElement.val(dateVal + timeVal);
         $.ajax({
             type: "POST",

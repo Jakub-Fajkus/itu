@@ -36,6 +36,7 @@ export default class Form {
         });
         this.$formElement.submit(e => {
             e.preventDefault();
+
             $outElement.val(dateVal+timeVal);
             $.ajax({
                 type: "POST",
