@@ -1,0 +1,41 @@
+
+$el: .fl;
+
+$(el) {
+  &__wrap {
+    position: fixed;
+    z-index: 99;
+    top: 15px;
+    right: 15px;
+    width: 280px;
+  }
+
+  &__msg {
+    margin: 10px 0;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 22px;
+
+    &--success {
+      background-color: rgb(22, 236, 0);
+    }
+
+    &--info{
+      background-color: rgba(0, 134, 236, 0.9);
+    }
+
+    &--error {
+      background-color:rgba(236, 0, 0, 0.85);
+    }
+
+    &--warning {
+      background-color: rgba(236, 134, 0, 0.95);
+    }
+  }
+}
+
+@media all and ($medium-up) {
+
+}
+

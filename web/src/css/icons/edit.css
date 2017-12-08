@@ -1,0 +1,8 @@
+.btn--edit:before {
+  content: '';
+  display: block;
+  width: 23px;
+  height: 23px;
+  background: svg-load('./../../svg/edit.svg'), linear-gradient(transparent, transparent);
+  background-size: cover;
+}

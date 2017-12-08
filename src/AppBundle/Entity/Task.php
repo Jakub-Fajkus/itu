@@ -69,6 +69,19 @@ class Task
      */
     private $tags;
 
+    /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=false, name="task_order")
+     */
+    private $order = 0;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="completed", type="boolean", nullable=false)
+     */
+    private $completed = false;
+
 
     /**
      * Task constructor.
@@ -206,6 +219,10 @@ class Task
     {
         $this->project = $project;
 
+        if ($project) {
+            $project->addTask($this);
+        }
+
         return $this;
     }
 
@@ -226,6 +243,7 @@ class Task
     {
         if (!$this->tags->contains($tag)) {
             $this->tags->add($tag);
+            $tag->addTask($this);
         }
 
         return $this;
@@ -239,6 +257,7 @@ class Task
     public function removeTag(Tag $tag): Task
     {
         $this->tags->remove($tag);
+        $tag->removeTask($this);
 
         return $this;
     }
@@ -249,5 +268,43 @@ class Task
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrder(): int
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param int $order
+     * @return Task
+     */
+    public function setOrder(int $order): Task
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCompleted(): bool
+    {
+        return $this->completed;
+    }
+
+    /**
+     * @param bool $completed
+     * @return Task
+     */
+    public function setCompleted(bool $completed): Task
+    {
+        $this->completed = $completed;
+
+        return $this;
     }
 }

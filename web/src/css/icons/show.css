@@ -1,0 +1,8 @@
+.btn--show:before {
+  content: '';
+  display: block;
+  width: 23px;
+  height: 23px;
+  background: svg-load('./../../svg/eye.svg'), linear-gradient(transparent, transparent);
+  background-size: cover;
+}

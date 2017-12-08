@@ -1,3 +1,8 @@
+user:
+    resource: "@UserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 app_task:
     resource: "@AppBundle/Controller/TaskController.php"
     type:     annotation
@@ -19,5 +24,6 @@ app:
     resource: '@AppBundle/Controller/'
     type: annotation
 
-fos_user_security:
-    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+

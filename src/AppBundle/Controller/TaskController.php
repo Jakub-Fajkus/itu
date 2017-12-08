@@ -5,7 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Task;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\TaskType;
 
 /**
@@ -30,7 +32,7 @@ class TaskController extends Controller
         return $this->render('task/index.html.twig', [
             'tasks' => $tasks,
             'jsController' => 'TaskController',
-            'jsAction' => 'indexAction'
+            'jsAction' => 'indexAction',
         ]);
     }
 
@@ -58,7 +60,7 @@ class TaskController extends Controller
             'task' => $task,
             'form' => $form->createView(),
             'jsController' => 'TaskController',
-            'jsAction' => 'newAction'
+            'jsAction' => 'newAction',
         ]);
     }
 
@@ -76,7 +78,7 @@ class TaskController extends Controller
             'task' => $task,
             'delete_form' => $deleteForm->createView(),
             'jsController' => 'TaskController',
-            'jsAction' => 'showAction'
+            'jsAction' => 'showAction',
         ]);
     }
 
@@ -103,9 +105,31 @@ class TaskController extends Controller
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'jsController' => 'TaskController',
-            'jsAction' => 'editAction'
+            'jsAction' => 'editAction',
         ]);
     }
+
+    /**
+     * @Route("/{id}/completed", name="task_set_completed")
+     * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @param Task    $task
+     * @return JsonResponse
+     */
+    public function setCompletedActions(Request $request, Task $task)
+    {
+        $completed = json_decode($request->getContent());
+
+        $task->setCompleted($completed);
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($task);
+        $em->flush();
+
+        return new JsonResponse(['message' => 'Označeno jako hotovo', 'status' => ProjectController::SUCCESS]);
+    }
+
 
     /**
      * Deletes a task entity.
@@ -139,7 +163,6 @@ class TaskController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('task_delete', ['id' => $task->getId()]))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

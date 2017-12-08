@@ -1,0 +1,124 @@
+{# Our light template for FOSuserBundle layout #}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<style>
+			body {
+				margin: 0;
+				padding: 0;
+				background-color: #f9f9f9;
+			}
+
+			body * {
+				box-sizing: border-box;
+			}
+
+			.fm {
+				display: block;
+				max-width: 320px;
+				margin: 60px auto;
+				background: #ababab;
+				padding: 32px;
+				background-image: linear-gradient(#d9f6ff, #e0f1fb);
+				box-shadow: 2px 2px 6px 1px #e0e0e0b5;
+				border:  1px solid #e0e0e0;
+			}
+
+			label {
+				margin-bottom: 8px;
+				display: block;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 14px;
+				font-weight: 700;
+			}
+
+			label[for="remember_me"] {
+				display: inline-block;
+				cursor: pointer;
+				font-size: 12px;
+				font-weight: 500;
+				vertical-align: middle;
+			}
+
+			input {
+				background: #fff;
+				font-family: Arial, Helvetica, sans-serif;
+				border: 1px solid #ececec;
+				outline: 0 none;
+			}
+
+			input[type="checkbox"] {
+				margin: 0 3px;
+				vertical-align: top;
+			}
+
+			input:not([type="checkbox"]) {
+				width: 100%;
+				margin-bottom: 12px;
+				padding: 12px;
+				font-size: 14px;
+			}
+
+			input[type="submit"] {
+				-webkit-appearance: none;
+				display: block;
+				cursor: pointer;
+				transition: .3s;
+				max-width: 50%;
+				margin: 10px auto;
+				line-height: 24px;
+				border-radius: 3px;
+				background: #01a4e2;
+				color: #fff;
+			}
+
+			input[type="submit"]:hover {
+				background: #5dcdf8;
+			}
+
+
+			img {
+				height: 80px;
+				margin: 0 auto 30px;
+				display: block;
+			}
+
+			.ub--hide {
+				display: none;
+			}
+
+		</style>
+	</head>
+	<body>
+			<div class="ub ub--hide">
+				{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+					{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+					<a href="{{ path('fos_user_security_logout') }}">
+							{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+					</a>
+				{% else %}
+					<a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+				{% endif %}
+			</div>
+
+			{% if app.request.hasPreviousSession %}
+				{% for type, messages in app.session.flashbag.all() %}
+					{% for message in messages %}
+						<div class="flash-{{ type }}">
+								{{ message }}
+						</div>
+					{% endfor %}
+				{% endfor %}
+			{% endif %}
+
+			<div class="fm">
+				<a href="{{ path('fos_user_security_login') }}">
+					<img src="{{ asset('images/logo.png') }}" alt="Nemocnice">
+				</a>
+				{% block fos_user_content %}
+				{% endblock fos_user_content %}
+			</div>
+	</body>
+</html>

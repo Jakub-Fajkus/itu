@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Project;
 use AppBundle\Entity\User;
 use AppBundle\Form\ExampleUserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -19,7 +20,7 @@ class DefaultController extends Controller
     {
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
             'jsController' => 'DefaultController',
             'jsAction' => 'indexAction'
         ]);
@@ -30,11 +31,15 @@ class DefaultController extends Controller
      */
     public function sortableExampleAction(Request $request)
     {
+        $projects = $this->getDoctrine()->getRepository(Project::class)
+            ->findBy(['user' => $this->getUser()], ['order' => 'ASC']);
+
         // replace this example code with whatever you need
         return $this->render('default/sortableExample.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
             'jsController' => 'DefaultController',
-            'jsAction' => 'sortableExampleAction'
+            'jsAction' => 'sortableExampleAction',
+            'projects' => $projects,
         ]);
     }
 
@@ -46,8 +51,7 @@ class DefaultController extends Controller
         dump(json_decode($request->getContent()));
         if (true) {
             return new JsonResponse([], 200);
-        }
-        else {
+        } else {
             return new JsonResponse([], 404);
         }
     }
@@ -65,8 +69,9 @@ class DefaultController extends Controller
         $form = $this->createForm(ExampleUserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            return new JsonResponse(['message'=>'ok']);
+            return new JsonResponse(['message' => 'ok']);
         }
+
         return $this->render('default/exampleNew.html.twig', [
             'form' => $form->createView(),
             'jsController' => 'DefaultController',
