@@ -50,7 +50,7 @@ class TaskController extends Controller
     {
         $form = $this->createForm(TaskType::class);
 
-        $html = $this->render('task/newForm.html.twig', ['form' => $form->createView()]);
+        $html = $this->renderView('task/newForm.html.twig', ['form' => $form->createView()]);
 
         return new JsonResponse(['html' => $html]);
     }
