@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
 
@@ -35,6 +36,7 @@ class Project
      * @var ArrayCollection
      *
      * @OneToMany(targetEntity="AppBundle\Entity\Task", mappedBy="project")
+     * @ORM\OrderBy({"order" = "ASC"})
      */
     private $tasks;
 
@@ -79,9 +81,9 @@ class Project
     }
 
     /**
-     * @return ArrayCollection<Task>
+     * @return Collection<Task>
      */
-    public function getTasks(): ArrayCollection
+    public function getTasks(): Collection
     {
         return $this->tasks;
     }
@@ -95,6 +97,7 @@ class Project
     {
         if (!$this->tasks->contains($task)) {
             $this->tasks->add($task);
+            $task->setProject($this);
         }
 
         return $this;

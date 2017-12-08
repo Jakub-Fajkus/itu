@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Project;
 use AppBundle\Entity\User;
 use AppBundle\Form\ExampleUserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -30,11 +31,14 @@ class DefaultController extends Controller
      */
     public function sortableExampleAction(Request $request)
     {
+        $projects = $this->getDoctrine()->getRepository(Project::class)->findAll();
+
         // replace this example code with whatever you need
         return $this->render('default/sortableExample.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
             'jsController' => 'DefaultController',
-            'jsAction' => 'sortableExampleAction'
+            'jsAction' => 'sortableExampleAction',
+            'projects' => $projects
         ]);
     }
 

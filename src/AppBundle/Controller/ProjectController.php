@@ -3,11 +3,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Project;
-use AppBundle\Services\ProjectReorder;
+use AppBundle\Entity\Task;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
- use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\ProjectType;
 
 /**
@@ -17,6 +18,11 @@ use AppBundle\Form\ProjectType;
  */
 class ProjectController extends Controller
 {
+    const SUCCESS = 'success';
+    const ERROR = 'error';
+    const INFO = 'info';
+
+
     /**
      * Lists all project entities.
      *
@@ -32,7 +38,7 @@ class ProjectController extends Controller
         return $this->render('project/index.html.twig', [
             'projects' => $projects,
             'jsController' => 'ProjectController',
-            'jsAction' => 'indexAction'
+            'jsAction' => 'indexAction',
         ]);
     }
 
@@ -62,7 +68,7 @@ class ProjectController extends Controller
             'project' => $project,
             'form' => $form->createView(),
             'jsController' => 'ProjectController',
-            'jsAction' => 'newAction'
+            'jsAction' => 'newAction',
         ]);
     }
 
@@ -82,7 +88,7 @@ class ProjectController extends Controller
             'project' => $project,
             'delete_form' => $deleteForm->createView(),
             'jsController' => 'ProjectController',
-            'jsAction' => 'showAction'
+            'jsAction' => 'showAction',
         ]);
     }
 
@@ -120,35 +126,41 @@ class ProjectController extends Controller
     /**
      * Zmeni poradi vsech projektu
      *
-     * @Route("/reorder/")
+     * @Route("/reorder/",  name="project_reorder")
      * @Method({"POST", "GET"})
      *
      * @param Request $request
+     * @return JsonResponse
      */
     public function reorderProjects(Request $request)
     {
-        $ids = [0, 1, 2];
+        $ids = json_decode($request->getContent());
+//        $ids = [2, 3, 1];
 
-        /** @var ProjectReorder $reorderService */
-        $reorderService = $this->get(ProjectReorder::class);
         //zmenime data entit - precislujeme je
-        $reorderService->reorder($ids);
+        $this->reorderProjectsByIds($ids);
 
-        //ulozime zmeny
-        $this->getDoctrine()->getManager()->flush();
+        return new JsonResponse(['flashMessage' => 'Pořadí změněno', 'status' => self::SUCCESS]);
     }
 
     /**
      * Zmeni poradi tasku v urcitem projektu
      *
-     * @Route("/{id}/reorder")
-     * @Method("POST")
+     * @Route("/{id}/reorder", name="project_reorder_tasks")
+     * @Method({"POST", "GET"})
      *
      * @param Request $request
+     * @return JsonResponse
      */
-    public function reorderTasks(Request $request)
+    public function reorderTasks(Request $request, Project $project)
     {
+        $ids = json_decode($request->getContent());
+//        $ids = [4, 6, 3, 7, 8, 5];
 
+        //zmenime data entit - precislujeme je
+        $this->reorderTasksInProject($project, $ids);
+
+        return new JsonResponse(['flashMessage' => 'Pořadí změněno', 'status' => self::SUCCESS]);
     }
 
 
@@ -187,7 +199,97 @@ class ProjectController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('project_delete', ['id' => $project->getId()]))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
+    }
+
+    /**
+     * @param int[] $ids
+     */
+    private function reorderProjectsByIds(array $ids): void
+    {
+        $em = $this->getDoctrine()->getManager();
+        /** @var Project[] $projects */
+        $projects = $em->getRepository(Project::class)->getByIds($ids);
+        $idsOrder = array_flip($ids);
+
+        usort($projects, function (Project $a, Project $b) use ($idsOrder) {
+            return $idsOrder[$a->getId()] <=> $idsOrder[$b->getId()];
+        });
+
+        $order = 0;
+        foreach ($projects as $project) {
+            $project->setOrder($order++);
+            $em->persist($project);
+        }
+
+        $em->flush();
+    }
+
+    /**
+     * @param Project $project
+     * @param array   $ids
+     */
+    private function reorderTasksInProject(Project $project, array $ids): void
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $emptyProject = $em->getRepository(Project::class)->find(1);
+
+        //vytahnu vsechny tasky z projektu -> prevedeme na pole, abysme se zbavili reference na kolekci
+        /** @var Task[] $currentProjectTasks */
+        $currentProjectTasks = $project->getTasks()->toArray();
+
+        $currentProjectTasksIds = [];
+
+        //pokud aktualni task neni v poli id, ktere poslal klient
+        //tak byl presunut do jineho, nebo do prazdneho
+        //takze jej priradime do prazdneho projektu
+        for ($i = 0, $count = \count($currentProjectTasks); $i < $count; $i++) {
+            $currentProjectTask = $currentProjectTasks[$i];
+            $currentProjectTasksIds[] = $currentProjectTask->getId();
+
+            if (false === in_array($currentProjectTask->getId(), $ids, false)) {
+                /** @var Task|false $last */
+                $last = $emptyProject->getTasks()->last();
+
+                //ziskame order posledniho prvku v prazdnem projektu
+                $lastOrder = ($last === false) ? 0 : $last->getOrder() + 1;
+
+                $currentProjectTask->setOrder($lastOrder);
+                $currentProjectTask->setProject($emptyProject);
+
+                unset($currentProjectTasks[$i]);
+            }
+        }
+
+        //podivame se, jestli se nepridalo nejake id
+        //pokud ano, pridame tento task do pole tasku, ktere jsou v tomto projektu
+        $addedIds = array_diff($ids, $currentProjectTasksIds);
+        if (!empty($addedIds)) {
+            foreach ($addedIds as $addedId) {
+                $task = $em->getRepository(Task::class)->find($addedId);
+                $task->setProject($project);
+                $currentProjectTasks[] = $task;
+            }
+        }
+
+
+        $idsOrder = array_flip($ids);
+
+        //seradime tasky podle jejich id
+        usort($currentProjectTasks, function (Task $a, Task $b) use ($idsOrder) {
+            return $idsOrder[$a->getId()] <=> $idsOrder[$b->getId()];
+        });
+
+        $order = 0;
+        foreach ($currentProjectTasks as $task) {
+            $task->setOrder($order++);
+
+            $em->persist($task);
+            $em->persist($project);
+        }
+
+        $em->persist($emptyProject);
+        $em->flush();
     }
 }

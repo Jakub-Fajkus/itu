@@ -71,7 +71,7 @@ class Task
 
     /**
      * @var int
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false, name="task_order")
      */
     private $order;
 
@@ -214,6 +214,10 @@ class Task
     {
         $this->project = $project;
 
+        if ($project) {
+            $project->addTask($this);
+        }
+
         return $this;
     }
 
@@ -234,6 +238,7 @@ class Task
     {
         if (!$this->tags->contains($tag)) {
             $this->tags->add($tag);
+            $tag->addTask($this);
         }
 
         return $this;
@@ -247,6 +252,7 @@ class Task
     public function removeTag(Tag $tag): Task
     {
         $this->tags->remove($tag);
+        $tag->removeTask($this);
 
         return $this;
     }
