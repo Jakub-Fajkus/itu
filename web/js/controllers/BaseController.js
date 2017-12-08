@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import {postJSON} from '../libraries/ajax';
 import Modal from '../libraries/Modal';
-import {flashMessageInit} from "../libraries/helpers";
 
 export default class BaseController {
     scopeElements = {};
@@ -10,17 +9,9 @@ export default class BaseController {
 
     constructor() {
         this.__initSelectors();
-        this.__initDND();
-        this.__initFlash();
+        this._initDND();
         this.__initModal();
         window.flash = (a,b) => {this._addFlashMessage(a,b)};
-    }
-
-    __initFlash()
-    {
-        if(this.scopeElements.flashMsgWrapper) {
-            this.__addFlashMessage = flashMessageInit(this.scopeElements.flashMsgWrapper);
-        }
     }
 
     __initModal()
@@ -51,9 +42,9 @@ export default class BaseController {
         });
     }
 
-    __initDND() //todo add HANDLE
+    _initDND($parent = $('body'))
     {
-        _.each($('[data-sortable]'), el => {
+        _.each($parent.find('[data-sortable]'), el => {
             let $el = $(el);
             let definition = JSON.parse(el.getAttribute('data-sortable'));
 

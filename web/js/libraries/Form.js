@@ -1,26 +1,25 @@
 import moment from 'moment';
+import {flashMessage, forceJquery} from "./helpers";
 
 export default class Form {
     formElement = undefined;
     $formElement = undefined;
+    modal = undefined;
 
-    constructor(el) {
-        if (el instanceof $) {
-            this.$formElement = el;
-            this.formElement = el[0];
-        } else {
+    _onSuccess = ()=>{};
 
-            this.$formElement = $(el);
-            this.formElement = el;
-        }
+    constructor(el, modal) {
+        this.$formElement = forceJquery(el);
+        this.modal = modal;
+        this.formElement = this.$formElement[0];
+
         let $outElement = $('[data-type="datetime"]');
         let dateVal = (+(new Date())),
             timeVal = 0;
         let oldDate = '', oldTime = '', oldVal = $outElement.val();
 
 
-        if(oldVal && + !isNaN(oldVal))
-        {
+        if (oldVal && +!isNaN(oldVal)) {
             console.log(+oldVal);
             let odt = moment(+oldVal * 1000);
             oldDate = `data-value="${odt.format('YYYY/MM/DD/')}"`;
@@ -65,7 +64,9 @@ export default class Form {
                 contentType: false,
                 url: this.formElement.action || '#',
                 success: (data) => {/*todo*/
-                    console.log(data);
+                    if (data.flashMessage) flashMessage(data.flashMessage, data.status || 'success');
+                    modal.hide();
+                    this._onSuccess(data);
                 },
                 data: new FormData(this.formElement),
                 error: (XMLHttpRequest, textStatus, errorThrown) => {/*todo*/
@@ -73,7 +74,10 @@ export default class Form {
                 }
             });
         });
+    }
 
-
+    onSuccess(callback)
+    {
+        this._onSuccess = callback;
     }
 }

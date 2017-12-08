@@ -2,7 +2,8 @@
 
 {% block body %}
 	<div id="wrapper">
-		<div id="container" data-sortGroup="projects" data-sortable="{{ {url:path('project_reorder') , settings: {placeholder: 'ui-state-highlight'} }|json_encode }}">
+		{# todo @FIK prázdný projekt je moc malý na drag and drop#}
+		<div id="container" data-sortGroup="projects" data-sortable="{{ {url:path('project_reorder') , settings: {placeholder: 'ui-state-highlight', handle: '[data-handle="project"]'} }|json_encode }}">
             {% for project in projects %}
 				{% include "project/show.html.twig" with {'project': project} only %}
             {% endfor %}
@@ -10,6 +11,6 @@
 	</div>
 
 	<div class="add_wrapper">
-		<button class="btn--fixed-add"></button>
+		<button data-selector="addProject" data-new-url="{{ path('project_new_form') }}" class="btn--fixed-add"></button>
 	</div>
 {% endblock %}

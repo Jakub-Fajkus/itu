@@ -1,23 +1,36 @@
-const FLASH_MSG_CLS_PREFIX = 'fl__msh fl__msh--';
-const CLASS_SHOWN = 'fl__wrap';
-const CLASS_HIDDEN = CLASS_SHOWN + 'hidden';
-
-//todo ad datepicker
-
-//div fl__wrap
-////p fl__msh
+const FLASH_MSG_CLS_PREFIX = 'fl__msg fl__msg--';
+const CLASS_HIDDEN = 'hidden';
 
 export function forceJquery(el) {
     return (el instanceof $)? el : $(el);
 }
 
-export function flashMessageInit($wrap) {
-    $wrap = forceJquery($wrap);
-    return (text, status = 'success') => {
-        let $content = $(`<p class="${FLASH_MSG_CLS_PREFIX+status}">${text}</p>`);
-        $wrap.append($content);
-        setTimeout(() => {
-            $content.remove();
-        }, 10*1000);
+let $wrap = $('[data-selector="flashMsgWrapper"]');
+
+export function flashMessage(text, status = 'success') {
+    $wrap.removeClass(CLASS_HIDDEN);
+    let $content = $(`<p class="${FLASH_MSG_CLS_PREFIX+status}">${text}</p>`);
+    $wrap.append($content);
+    setTimeout(() => {
+        $content.remove();
+        if(!$wrap.children().length)
+        {
+            $wrap.addClass(CLASS_HIDDEN);
+        }
+    }, 10*1000);
+}
+
+export function replace($el, $new) {
+    let $prev = $el.prev();
+    if($prev.length)
+    {
+        $el.remove();
+        $prev.after($new);
+    }
+    else
+    {
+        let $parent = $el.parent();
+        $el.remove();
+        $parent.prepend($new);
     }
 }

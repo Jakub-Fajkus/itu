@@ -8256,6 +8256,10 @@ module.exports = function(module) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.postJSON = exports.getJSON = undefined;
+
+var _helpers = __webpack_require__(127);
+
 var getJSON = exports.getJSON = function getJSON(url) {
     var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     return new Promise(function (resolve, reject) {
@@ -8263,7 +8267,8 @@ var getJSON = exports.getJSON = function getJSON(url) {
             type: "GET",
             url: url,
             success: function success(data) {
-                return resolve(data);
+                if (data.flashMessage) (0, _helpers.flashMessage)(data.flashMessage, data.status || 'success');
+                resolve(data);
             },
             data: data,
             error: function error(XMLHttpRequest, textStatus, errorThrown) {
@@ -8279,7 +8284,8 @@ var postJSON = exports.postJSON = function postJSON(url) {
             type: "POST",
             url: url,
             success: function success(data) {
-                return resolve(data);
+                if (data.flashMessage) (0, _helpers.flashMessage)(data.flashMessage, data.status || 'success');
+                resolve(data);
             },
             data: JSON.stringify(data),
             processData: false,
@@ -8308,31 +8314,41 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.forceJquery = forceJquery;
-exports.flashMessageInit = flashMessageInit;
-var FLASH_MSG_CLS_PREFIX = 'fl__msh fl__msh--';
-var CLASS_SHOWN = 'fl__wrap';
-var CLASS_HIDDEN = CLASS_SHOWN + 'hidden';
-
-//todo ad datepicker
-
-//div fl__wrap
-////p fl__msh
+exports.flashMessage = flashMessage;
+exports.replace = replace;
+var FLASH_MSG_CLS_PREFIX = 'fl__msg fl__msg--';
+var CLASS_HIDDEN = 'hidden';
 
 function forceJquery(el) {
     return el instanceof $ ? el : $(el);
 }
 
-function flashMessageInit($wrap) {
-    $wrap = forceJquery($wrap);
-    return function (text) {
-        var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'success';
+var $wrap = $('[data-selector="flashMsgWrapper"]');
 
-        var $content = $('<p class="' + (FLASH_MSG_CLS_PREFIX + status) + '">' + text + '</p>');
-        $wrap.append($content);
-        setTimeout(function () {
-            $content.remove();
-        }, 10 * 1000);
-    };
+function flashMessage(text) {
+    var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'success';
+
+    $wrap.removeClass(CLASS_HIDDEN);
+    var $content = $('<p class="' + (FLASH_MSG_CLS_PREFIX + status) + '">' + text + '</p>');
+    $wrap.append($content);
+    setTimeout(function () {
+        $content.remove();
+        if (!$wrap.children().length) {
+            $wrap.addClass(CLASS_HIDDEN);
+        }
+    }, 10 * 1000);
+}
+
+function replace($el, $new) {
+    var $prev = $el.prev();
+    if ($prev.length) {
+        $el.remove();
+        $prev.after($new);
+    } else {
+        var $parent = $el.parent();
+        $el.remove();
+        $parent.prepend($new);
+    }
 }
 
 /***/ }),
@@ -25144,9 +25160,7 @@ var _BaseController2 = __webpack_require__(453);
 
 var _BaseController3 = _interopRequireDefault(_BaseController2);
 
-var _Form = __webpack_require__(456);
-
-var _Form2 = _interopRequireDefault(_Form);
+var _helpers = __webpack_require__(127);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25168,15 +25182,79 @@ var DefaultController = function (_BaseController) {
     _createClass(DefaultController, [{
         key: 'indexAction',
         value: function indexAction() {
-            console.log(this.scopeElements);
+            var _this2 = this;
+
+            this._initProjects();
+
+            var modal = this.modal,
+                dnd = function dnd(p) {
+                return _this2._initDND(p);
+            },
+                ip = function ip(p) {
+                return _this2._initProjects(p);
+            };
+            $(this.scopeElements.addProject).click(function () {
+                var _this3 = this;
+
+                modal.loadFormNow(this.getAttribute('data-new-url')).then(function (form) {
+                    form.onSuccess(function (response) {
+                        var $new = $(response.html);
+                        $(_this3).closest('div[data-sort-name]').append();
+                        dnd($new);
+                        ip($new);
+                    });
+                });
+            });
         }
     }, {
-        key: 'sortableExampleAction',
-        value: function sortableExampleAction() {/*cokoliv*/}
-    }, {
-        key: 'formExampleAction',
-        value: function formExampleAction() {
-            new _Form2.default($('[name="appbundle_task"]')[0]);
+        key: '_initProjects',
+        value: function _initProjects() {
+            var _this4 = this;
+
+            var $parent = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : $('body');
+
+
+            var modal = this.modal,
+                dnd = function dnd(p) {
+                return _this4._initDND(p);
+            },
+                me = function me(p) {
+                return _this4._initProjects(p);
+            };
+
+            $parent.find('[data-sortgroup="tasks"]').find('li').dblclick(edit);
+            $parent.find('[data-handle="project"]').dblclick(edit);
+            $parent.find('[data-multipleSelector="editProject"]').click(edit);
+
+            $parent.find('[data-new-url]').click(function () {
+                var _this5 = this;
+
+                modal.loadFormNow(this.getAttribute('data-new-url')).then(function (form) {
+                    var $project = $(_this5).closest('div[data-sort-name]'),
+                        projectId = $project.attr('data-sort-name');
+                    form.$formElement.find('#appbundle_task_project').val('' + projectId);
+
+                    form.onSuccess(function (response) {
+                        var $new = $(response.html);
+                        (0, _helpers.replace)($project, $new);
+                        dnd($new);
+                        me($new);
+                    });
+                });
+            });
+
+            function edit() {
+                var _this6 = this;
+
+                modal.loadFormNow(this.getAttribute('data-edit-url')).then(function (form) {
+                    form.onSuccess(function (response) {
+                        var $new = $(response.html);
+                        (0, _helpers.replace)($(_this6).closest('div[data-sort-name]'), $new);
+                        dnd($new);
+                        me($new);
+                    });
+                });
+            }
         }
     }]);
 
@@ -25210,8 +25288,6 @@ var _Modal = __webpack_require__(455);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
-var _helpers = __webpack_require__(127);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25228,8 +25304,7 @@ var BaseController = function () {
         this.__addFlashMessage = function () {};
 
         this.__initSelectors();
-        this.__initDND();
-        this.__initFlash();
+        this._initDND();
         this.__initModal();
         window.flash = function (a, b) {
             _this._addFlashMessage(a, b);
@@ -25237,13 +25312,6 @@ var BaseController = function () {
     }
 
     _createClass(BaseController, [{
-        key: '__initFlash',
-        value: function __initFlash() {
-            if (this.scopeElements.flashMsgWrapper) {
-                this.__addFlashMessage = (0, _helpers.flashMessageInit)(this.scopeElements.flashMsgWrapper);
-            }
-        }
-    }, {
         key: '__initModal',
         value: function __initModal() {
             if (this.scopeElements.modalWrapper && this.scopeElements.modalClosers && this.scopeElements.modalContainer) {
@@ -25272,10 +25340,11 @@ var BaseController = function () {
             });
         }
     }, {
-        key: '__initDND',
-        value: function __initDND() //todo add HANDLE
-        {
-            _lodash2.default.each($('[data-sortable]'), function (el) {
+        key: '_initDND',
+        value: function _initDND() {
+            var $parent = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : $('body');
+
+            _lodash2.default.each($parent.find('[data-sortable]'), function (el) {
                 var $el = $(el);
                 var definition = JSON.parse(el.getAttribute('data-sortable'));
 
@@ -42428,10 +42497,16 @@ var _ajax = __webpack_require__(126);
 
 var _helpers = __webpack_require__(127);
 
+var _Form = __webpack_require__(456);
+
+var _Form2 = _interopRequireDefault(_Form);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var CLASS_HIDDEN = 'xxx';
-var CLASS_SHOWN = 'yy';
+var CLASS_HIDDEN = 'mw';
+var CLASS_SHOWN = CLASS_HIDDEN + 'mw--active';
 
 var Modal = function () {
     function Modal(wrapper, closers, container) {
@@ -42439,6 +42514,8 @@ var Modal = function () {
 
         this.$wrapper = undefined;
         this.$container = undefined;
+        this.form = undefined;
+        this.locked = false;
         this.lastLoaded = '';
 
         this.$wrapper = (0, _helpers.forceJquery)(wrapper);
@@ -42485,9 +42562,36 @@ var Modal = function () {
         value: function load(url) {
             var _this2 = this;
 
-            (0, _ajax.getJSON)(url).then(function (responseData) {
-                _this2.lastLoaded = responseData.html;
+            if (!this.locked) {
+                this.locked = true;
+                return (0, _ajax.getJSON)(url).then(function (responseData) {
+                    _this2.lastLoaded = responseData.html;
+                    _this2.locked = false;
+                    return responseData;
+                });
+            }
+            var fake = { then: function then() {
+                    return fake;
+                }, catch: function _catch() {
+                    return fake;
+                } };
+            return fake;
+        }
+    }, {
+        key: "loadFormNow",
+        value: function loadFormNow(url) {
+            var _this3 = this;
+
+            return this.load(url).then(function () {
+                _this3.setContent();
+                _this3.show();
+                return _this3.initForm();
             });
+        }
+    }, {
+        key: "initForm",
+        value: function initForm() {
+            return this.form = new _Form2.default(this.$wrapper.find('form'), this);
         }
     }]);
 
@@ -42507,91 +42611,107 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _moment = __webpack_require__(1);
 
 var _moment2 = _interopRequireDefault(_moment);
+
+var _helpers = __webpack_require__(127);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Form = function Form(el) {
-    var _this = this;
+var Form = function () {
+    function Form(el, modal) {
+        var _this = this;
 
-    _classCallCheck(this, Form);
+        _classCallCheck(this, Form);
 
-    this.formElement = undefined;
-    this.$formElement = undefined;
+        this.formElement = undefined;
+        this.$formElement = undefined;
+        this.modal = undefined;
 
-    if (el instanceof $) {
-        this.$formElement = el;
-        this.formElement = el[0];
-    } else {
+        this._onSuccess = function () {};
 
-        this.$formElement = $(el);
-        this.formElement = el;
-    }
-    var $outElement = $('[data-type="datetime"]');
-    var dateVal = +new Date(),
-        timeVal = 0;
-    var oldDate = '',
-        oldTime = '',
-        oldVal = $outElement.val();
+        this.$formElement = (0, _helpers.forceJquery)(el);
+        this.modal = modal;
+        this.formElement = this.$formElement[0];
 
-    if (oldVal && +!isNaN(oldVal)) {
-        console.log(+oldVal);
-        var odt = (0, _moment2.default)(+oldVal * 1000);
-        oldDate = 'data-value="' + odt.format('YYYY/MM/DD/') + '"';
-        oldTime = 'data-value="' + odt.format('HH:mm') + '"';
-        var clone = odt.clone();
-        clone.millisecond(0);
-        clone.seconds(0);
-        clone.minutes(0);
-        clone.hours(-1);
-        dateVal = +clone.unix();
-        timeVal = +odt.unix() - dateVal;
-    }
-    var $dateElement = $('<input type="text" ' + oldDate + '/>'),
-        $timeElement = $('<input type="text" ' + oldTime + '/>');
-    $outElement.parent().append($dateElement);
-    $outElement.parent().append($timeElement);
-    $outElement.hide();
+        var $outElement = $('[data-type="datetime"]');
+        var dateVal = +new Date(),
+            timeVal = 0;
+        var oldDate = '',
+            oldTime = '',
+            oldVal = $outElement.val();
 
-    $dateElement.pickadate({ //todo Edit
-        formatSubmit: 'yyyy/mm/dd',
-        onSet: function onSet(context) {
-            console.log(context.select);
-            dateVal = context.select / 1000;
+        if (oldVal && +!isNaN(oldVal)) {
+            console.log(+oldVal);
+            var odt = (0, _moment2.default)(+oldVal * 1000);
+            oldDate = 'data-value="' + odt.format('YYYY/MM/DD/') + '"';
+            oldTime = 'data-value="' + odt.format('HH:mm') + '"';
+            var clone = odt.clone();
+            clone.millisecond(0);
+            clone.seconds(0);
+            clone.minutes(0);
+            clone.hours(-1);
+            dateVal = +clone.unix();
+            timeVal = +odt.unix() - dateVal;
         }
-    });
-    $timeElement.pickatime({
-        format: 'H:i',
-        formatSubmit: 'H:i',
-        onSet: function onSet(context) {
-            console.log(context.select);
-            timeVal = (context.select + 60) * 60;
-        }
-    });
-    this.$formElement.submit(function (e) {
-        e.preventDefault();
-        $outElement.val(dateVal + timeVal);
-        $.ajax({
-            type: "POST",
-            processData: false,
-            contentType: false,
-            url: _this.formElement.action || '#',
-            success: function success(data) {
-                /*todo*/
-                console.log(data);
-            },
-            data: new FormData(_this.formElement),
-            error: function error(XMLHttpRequest, textStatus, errorThrown) {
-                /*todo*/
-                console.error(data);
+        var $dateElement = $('<input type="text" ' + oldDate + '/>'),
+            $timeElement = $('<input type="text" ' + oldTime + '/>');
+        $outElement.parent().append($dateElement);
+        $outElement.parent().append($timeElement);
+        $outElement.hide();
+
+        $dateElement.pickadate({ //todo Edit
+            formatSubmit: 'yyyy/mm/dd',
+            onSet: function onSet(context) {
+                console.log(context.select);
+                dateVal = context.select / 1000;
             }
         });
-    });
-};
+        $timeElement.pickatime({
+            format: 'H:i',
+            formatSubmit: 'H:i',
+            onSet: function onSet(context) {
+                console.log(context.select);
+                timeVal = (context.select + 60) * 60;
+            }
+        });
+        this.$formElement.submit(function (e) {
+            e.preventDefault();
+            $outElement.val(dateVal + timeVal);
+            $.ajax({
+                type: "POST",
+                processData: false,
+                contentType: false,
+                url: _this.formElement.action || '#',
+                success: function success(data) {
+                    /*todo*/
+                    if (data.flashMessage) (0, _helpers.flashMessage)(data.flashMessage, data.status || 'success');
+                    modal.hide();
+                    _this._onSuccess(data);
+                },
+                data: new FormData(_this.formElement),
+                error: function error(XMLHttpRequest, textStatus, errorThrown) {
+                    /*todo*/
+                    console.error(data);
+                }
+            });
+        });
+    }
+
+    _createClass(Form, [{
+        key: 'onSuccess',
+        value: function onSuccess(callback) {
+            this._onSuccess = callback;
+        }
+    }]);
+
+    return Form;
+}();
 
 exports.default = Form;
 

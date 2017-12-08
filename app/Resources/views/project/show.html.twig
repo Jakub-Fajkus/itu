@@ -1,9 +1,11 @@
 <div class="pr" data-sort-name="{{ project.id }}">
-    <div class="pr__header">
+    <div class="pr__header" data-handle="project" data-edit-url="{{ path('project_edit_form', {id: project.id}) }}">
         <h2 class="pr__title">{{ project.name }}</h2>
         <div class="pr__action">
-            <a href="#" class="btn--add"></a>
-            <a href="#" class="btn--edit"></a>
+            {#TODO @DAVE přidat cursor pointer#}
+            <span data-new-url="{{ path('task_new_form') }}" class="btn--add"></span>
+            {#TODO @DAVE třída btn--edit dělá tenhle element neklikatelnej#}
+            <span data-edit-url="{{ path('project_edit_form', {id: project.id}) }}" data-multipleSelector="editProject">edit</span>
         </div>
     </div>
 

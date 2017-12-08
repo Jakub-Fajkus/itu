@@ -79,6 +79,7 @@ class ProjectController extends Controller
     public function newAction(Request $request)
     {
         $project = new Project();
+        $project->setUser($this->getUser());
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
 

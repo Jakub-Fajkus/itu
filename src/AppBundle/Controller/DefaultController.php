@@ -28,7 +28,7 @@ class DefaultController extends Controller
         return $this->render('default/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
             'jsController' => 'DefaultController',
-            'jsAction' => 'sortableExampleAction',
+            'jsAction' => 'indexAction',
             'projects' => $projects,
         ]);
     }
