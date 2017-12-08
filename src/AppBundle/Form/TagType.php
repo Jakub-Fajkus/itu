@@ -16,7 +16,6 @@ class TagType extends AbstractType
     {
         $builder
             ->add('name')
-//            ->add('tasks')
         ;
     }
     
@@ -35,7 +34,7 @@ class TagType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_tag';
+        return 'data';
     }
 
 

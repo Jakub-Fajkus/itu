@@ -3,8 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Project;
+use AppBundle\Entity\Task;
 use AppBundle\Entity\User;
 use AppBundle\Form\ExampleUserType;
+use AppBundle\Form\TagType;
+use AppBundle\Form\TaskType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -65,10 +68,20 @@ class DefaultController extends Controller
      */
     public function exampleNewAction(Request $request)
     {
-        $user = new User();
-        $form = $this->createForm(ExampleUserType::class, $user);
+//        $user = new User();
+//        $form = $this->createForm(ExampleUserType::class, $user);
+
+
+        $task = $this->getDoctrine()->getRepository(Task::class)->find(1);
+        $form = $this->createForm(TaskType::class, $task);
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($task);
+            $em->flush();
+
             return new JsonResponse(['message' => 'ok']);
         }
 
