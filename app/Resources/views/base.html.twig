@@ -20,23 +20,23 @@
 		<noscript>
 			<link rel="stylesheet" type="text/css" href="{{ asset('jquery/jquery-ui.css') }}">
 		</noscript>
-        <link rel="stylesheet" href="{{ asset('jquery/jquery-ui.css') }}">
-        <link rel="stylesheet" href="{{ asset('jquery/pickadate/default.css') }}">
-        <link rel="stylesheet" href="{{ asset('jquery/pickadate/default.date.css') }}">
-        <link rel="stylesheet" href="{{ asset('jquery/pickadate/default.time.css') }}">
-        {#<link rel="stylesheet" href="{{ asset('jquery/jquery.datetimepicker.css') }}">#}
-        <script src="{{ asset('jquery/jquery.min.js') }}"></script>
-        <script src="{{ asset('jquery/jquery-1.12.1-ui.js') }}"></script>
-        <script src="{{ asset('jquery/jquery.ui.touch-punch.min.js') }}"></script>
-        <script src="{{ asset('jquery/pickadate/legacy.js') }}"></script>
-        <script src="{{ asset('jquery/pickadate/picker.js') }}"></script>
-        <script src="{{ asset('jquery/pickadate/picker.date.js') }}"></script>
-        <script src="{{ asset('jquery/pickadate/picker.time.js') }}"></script>
-        <script src="{{ asset('jquery/pickadate/cs_CZ.js') }}"></script>
-        {#<script src="{{ asset('jquery/jquery.datetimepicker.js') }}"></script>#}
 
+		<link rel="stylesheet" href="{{ asset('jquery/jquery-ui.css') }}">
+		<link rel="stylesheet" href="{{ asset('jquery/pickadate/default.css') }}">
+		<link rel="stylesheet" href="{{ asset('jquery/pickadate/default.date.css') }}">
+		<link rel="stylesheet" href="{{ asset('jquery/pickadate/default.time.css') }}">
+		{#<link rel="stylesheet" href="{{ asset('jquery/jquery.datetimepicker.css') }}">#}
+		<script src="{{ asset('jquery/jquery.min.js') }}"></script>
+		<script src="{{ asset('jquery/jquery-1.12.1-ui.js') }}"></script>
+		<script src="{{ asset('jquery/jquery.ui.touch-punch.min.js') }}"></script>
+		<script src="{{ asset('jquery/pickadate/legacy.js') }}"></script>
+		<script src="{{ asset('jquery/pickadate/picker.js') }}"></script>
+		<script src="{{ asset('jquery/pickadate/picker.date.js') }}"></script>
+		<script src="{{ asset('jquery/pickadate/picker.time.js') }}"></script>
+		<script src="{{ asset('jquery/pickadate/cs_CZ.js') }}"></script>
+		{#<script src="{{ asset('jquery/jquery.datetimepicker.js') }}"></script>#}
 
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}" />
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/icons.css') }}" />
 
 		{% if jsController is defined and jsAction is defined%}
@@ -49,6 +49,8 @@
 		<div class="page-wrapper">
 
 			<header class="header h">
+				<a href="{{ path('fos_user_security_logout') }}" title="Odhlásit se" class="btn--logout"></a>
+
 				<input type="checkbox" class="mm-toogle__input hidden" id="mm-toogler__input">
 				<label for="mm-toogler__input" class="mm-toogler">
 					<span class="mm-toogler__btn"></span>

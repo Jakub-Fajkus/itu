@@ -48,6 +48,7 @@ $(el) {
       top: 0;
       display: block;
       width: auto;
+      height: auto;
       margin: 0 auto;
       transform: translate3D(0,0,0);
       background-color: transparent;
