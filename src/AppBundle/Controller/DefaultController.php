@@ -43,7 +43,7 @@ class DefaultController extends Controller
      */
     public function setSortedExampleAction(Request $request)
     {
-        if(true) {
+        if (true) {
             return new JsonResponse([], 200);
         }
         else {

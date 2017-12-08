@@ -1,6 +1,5 @@
 
 export default class Form {
-
     formElement = undefined;
     $formElement = undefined;
 

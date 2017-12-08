@@ -4,7 +4,7 @@
     <div id="wrapper">
         <div id="container">
             {#http://api.jqueryui.com/sortable/#}
-            <ul id="sortable1" data-sortable="{{ {url:path('setSortedExample') , settings: {placeholder: 'ui-state-highlight'} }|json_encode }}">
+            <ul data-sortable="{{ {url:path('setSortedExample') , settings: {placeholder: 'ui-state-highlight'} }|json_encode }}">
                 <li data-sort-name="name1" class="ui-state-default">Item 1</li>
                 <li data-sort-name="name2" class="ui-state-default">Item 2</li>
                 <li data-sort-name="name3" class="ui-state-default">Item 3</li>
@@ -12,7 +12,15 @@
                 <li data-sort-name="name5" class="ui-state-default">Item 5</li>
             </ul>
 
-            <div id="sortable2" data-sortable="{{ {'url':path('setSortedExample'), settings: {} }|json_encode }}">
+            <div data-sortGroup="project" data-sortable="{{ {'url':path('setSortedExample'), settings: {} }|json_encode }}">
+                <div data-sort-name="name1" class="ui-state-default">Item 1</div>
+                <div data-sort-name="name2" class="ui-state-default">Item 2</div>
+                <div data-sort-name="name3" class="ui-state-default">Item 3</div>
+                <div data-sort-name="name4" class="ui-state-default">Item 4</div>
+                <div data-sort-name="name5" class="ui-state-default">Item 5</div>
+            </div>
+            ----------------------------------------------------------------
+            <div data-sortGroup="project" data-sortable="{{ {'url':path('setSortedExample'), settings: {} }|json_encode }}">
                 <div data-sort-name="name1" class="ui-state-default">Item 1</div>
                 <div data-sort-name="name2" class="ui-state-default">Item 2</div>
                 <div data-sort-name="name3" class="ui-state-default">Item 3</div>

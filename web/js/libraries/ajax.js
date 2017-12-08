@@ -12,7 +12,9 @@ export let postJSON = (url, data = {}) => new Promise((resolve, reject) => {
         type: "POST",
         url: url,
         success: (data) => resolve(data),
-        data: data,
+        data: JSON.stringify(data),
+        processData: false,
+        contentType: 'application/json',
         error: (XMLHttpRequest, textStatus, errorThrown) => reject({
             responseText: XMLHttpRequest.responseText,
             responseJSON: XMLHttpRequest.responseJSON,
