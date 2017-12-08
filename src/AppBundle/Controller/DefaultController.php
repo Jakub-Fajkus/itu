@@ -31,7 +31,7 @@ class DefaultController extends Controller
      */
     public function sortableExampleAction(Request $request)
     {
-        $projects = $this->getDoctrine()->getRepository(Project::class)->findAll();
+        $projects = $this->getDoctrine()->getRepository(Project::class)->findBy(['user' => $this->getUser()]);
 
         // replace this example code with whatever you need
         return $this->render('default/sortableExample.html.twig', [

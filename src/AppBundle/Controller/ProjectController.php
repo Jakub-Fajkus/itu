@@ -135,7 +135,6 @@ class ProjectController extends Controller
     public function reorderProjects(Request $request)
     {
         $ids = json_decode($request->getContent());
-//        $ids = [2, 3, 1];
 
         //zmenime data entit - precislujeme je
         $this->reorderProjectsByIds($ids);
@@ -155,7 +154,6 @@ class ProjectController extends Controller
     public function reorderTasks(Request $request, Project $project)
     {
         $ids = json_decode($request->getContent());
-//        $ids = [4, 6, 3, 7, 8, 5];
 
         //zmenime data entit - precislujeme je
         $this->reorderTasksInProject($project, $ids);
@@ -233,7 +231,7 @@ class ProjectController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $emptyProject = $em->getRepository(Project::class)->find(1);
+        $emptyProject = $em->getRepository(Project::class)->findOneBy(['user' => $this->getUser(), 'isDefault' => true]);
 
         //vytahnu vsechny tasky z projektu -> prevedeme na pole, abysme se zbavili reference na kolekci
         /** @var Task[] $currentProjectTasks */
