@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 //    exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
 //}
 
+date_default_timezone_set ( 'Europe/Prague');
 
 
 //phpinfo();
