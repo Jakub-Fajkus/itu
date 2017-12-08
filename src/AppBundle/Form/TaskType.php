@@ -29,16 +29,14 @@ class TaskType extends AbstractType
             ->add('due', TextType::class, ['required' => false, 'attr' => ['data-type' => 'datetime',]])
             ->add('project')
             ->add('tags', EntityType::class, ['class' => Tag::class, 'multiple' => true, 'expanded' => 'true'])
-         ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class);
 
 
         $builder->get('due')->addModelTransformer(new CallbackTransformer(
-            function (\DateTime $datetime) {
-                // transform the array to a string
-                return $datetime->getTimestamp();
+            function (?\DateTime $datetime) {
+                return ($datetime) ? $datetime->getTimestamp() : (new \DateTime())->getTimestamp();
             },
             function ($timestamp) {
-                // transform the string back to an array
                 return (new \DateTime())->setTimestamp($timestamp);
             }));
     }

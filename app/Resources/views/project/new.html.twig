@@ -3,10 +3,7 @@
 {% block body %}
     <h1>Project creation</h1>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+    {% include 'project/newForm.html.twig' with {form: form} only%}
 
     <ul>
         <li>

@@ -17,6 +17,8 @@ use AppBundle\Form\TaskType;
  */
 class TaskController extends Controller
 {
+    //todo: JS posila datum jako timestamp
+
     /**
      * Lists all task entities.
      *
@@ -34,6 +36,28 @@ class TaskController extends Controller
             'jsController' => 'TaskController',
             'jsAction' => 'indexAction',
         ]);
+    }
+
+    /**
+     * @Route("/new-form", name="task_new_form")
+     * @Method("GET")
+     */
+    public function getNewFormAction()
+    {
+        $form = $this->createForm(TaskType::class);
+
+        return $this->render('task/newForm.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/{id}/edit-form/", name="task_edit_form")
+     * @Method("GET")
+     */
+    public function getEditFormAction(Task $task)
+    {
+        $form = $this->createForm(TaskType::class, $task);
+
+        return $this->render('task/editForm.html.twig', ['form' => $form->createView()]);
     }
 
     /**

@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\ProjectType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Project controller.
@@ -22,7 +23,7 @@ class ProjectController extends Controller
     const ERROR = 'error';
     const INFO = 'info';
 
-
+//todo: vytvorit routy, vracejici jen html formulare(jen <form> pro project a task
     /**
      * Lists all project entities.
      *
@@ -40,6 +41,28 @@ class ProjectController extends Controller
             'jsController' => 'ProjectController',
             'jsAction' => 'indexAction',
         ]);
+    }
+
+    /**
+     * @Route("/new-form", name="project_new_form")
+     * @Method("GET")
+     */
+    public function getNewFormAction()
+    {
+        $form = $this->createForm(ProjectType::class);
+
+        return $this->render('project/newForm.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/{id}/edit-form/", name="project_edit_form")
+     * @Method("GET")
+     */
+    public function getEditFormAction(Project $project)
+    {
+        $form = $this->createForm(ProjectType::class, $project);
+
+        return $this->render('project/editForm.html.twig', ['form' => $form->createView()]);
     }
 
     /**
