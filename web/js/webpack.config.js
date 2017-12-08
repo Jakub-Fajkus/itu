@@ -17,8 +17,9 @@ module.exports = {
                     options: {
                         presets: [
                             'es2015',
-                            'stage-2',
-                        ]
+                            'stage-2'
+                        ],
+                        plugins: ['transform-es2015-spread']
                     }
                 }]
             },

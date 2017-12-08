@@ -1,6 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div data-selector="modalWrapper">
+        <span data-multipleSelector="modalClosers">x</span>;
+        <div class="somethingSomething">
+            <div data-selector="modalContainer"></div>
+        </div>
+    </div>
+
+    <div data-selector="flashMsgWrapper">
+    </div>
     <div id="wrapper">
         <div id="container">
            {{ form(form) }}

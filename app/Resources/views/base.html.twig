@@ -20,13 +20,24 @@
 		<noscript>
 			<link rel="stylesheet" type="text/css" href="{{ asset('jquery/jquery-ui.css') }}">
 		</noscript>
+        <link rel="stylesheet" href="{{ asset('jquery/jquery-ui.css') }}">
+        <link rel="stylesheet" href="{{ asset('jquery/pickadate/default.css') }}">
+        <link rel="stylesheet" href="{{ asset('jquery/pickadate/default.date.css') }}">
+        <link rel="stylesheet" href="{{ asset('jquery/pickadate/default.time.css') }}">
+        {#<link rel="stylesheet" href="{{ asset('jquery/jquery.datetimepicker.css') }}">#}
+        <script src="{{ asset('jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('jquery/jquery-1.12.1-ui.js') }}"></script>
+        <script src="{{ asset('jquery/jquery.ui.touch-punch.min.js') }}"></script>
+        <script src="{{ asset('jquery/pickadate/legacy.js') }}"></script>
+        <script src="{{ asset('jquery/pickadate/picker.js') }}"></script>
+        <script src="{{ asset('jquery/pickadate/picker.date.js') }}"></script>
+        <script src="{{ asset('jquery/pickadate/picker.time.js') }}"></script>
+        <script src="{{ asset('jquery/pickadate/cs_CZ.js') }}"></script>
+        {#<script src="{{ asset('jquery/jquery.datetimepicker.js') }}"></script>#}
 
-		<link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}" />
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}" />
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/icons.css') }}" />
-
-		<script src="{{ asset('jquery/jquery-1.12.4.js') }}"></script>
-		<script src="{{ asset('jquery/jquery-1.12.1-ui.js') }}"></script>
-		<script src="{{ asset('jquery/jquery.ui.touch-punch.min.js') }}"></script>
 
 		{% if jsController is defined and jsAction is defined%}
 			<input type="hidden" data-controller="name" value="{{ jsController }}">
