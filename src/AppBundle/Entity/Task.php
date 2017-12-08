@@ -73,8 +73,14 @@ class Task
      * @var int
      * @ORM\Column(type="integer", nullable=false, name="task_order")
      */
-    private $order;
+    private $order = 0;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="completed", type="boolean", nullable=false)
+     */
+    private $completed = false;
 
 
     /**
@@ -85,7 +91,6 @@ class Task
         $this->createdAt = new \DateTime();
         $this->tags = new ArrayCollection();
         $this->due = new \DateTime();
-        $this->order = 0;
     }
 
 
@@ -280,6 +285,25 @@ class Task
     public function setOrder(int $order): Task
     {
         $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCompleted(): bool
+    {
+        return $this->completed;
+    }
+
+    /**
+     * @param bool $completed
+     * @return Task
+     */
+    public function setCompleted(bool $completed): Task
+    {
+        $this->completed = $completed;
 
         return $this;
     }

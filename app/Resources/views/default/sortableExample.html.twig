@@ -6,9 +6,18 @@
             {% for project in projects %}
                 <div  data-sort-name="{{ project.id }}">
                     <h2>{{ project.name }}</h2>
-                    <ul data-sortGroup="tasks" style="width: 100%; min-height: 5em;" data-sortable="{{ {url:path('project_reorder_tasks', {'id': project.id}) , settings: {placeholder: 'ui-state-highlight'} }|json_encode }}">
+                    <ul data-sortGroup="tasks" style="width: 100%; min-height: 5em;" data-sortable="{{ {url:path('project_reorder_tasks', {'id': project.id}) , settings: {placeholder: 'ui-state-highlight', cancel: '[data-not-dragable="true"]'} }|json_encode }}">
+                        {% set completed = {} %}
                         {% for task in project.tasks %}
-                            <li data-sort-name="{{ task.id }}" class="ui-state-default">{{ task.name }}</li>
+                            {% if task.completed %}
+                                {% set completed = completed|merge([task]) %}
+                            {% else %}
+                                <li data-sort-name="{{ task.id }}" class="ui-state-default">{{ task.name }}</li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% for task in completed %}
+                            <li style="background-color: grey;" data-not-dragable="true" data-sort-name="{{ task.id }}" class="ui-state-default">{{ task.name }}</li>
                         {% endfor %}
                     </ul>
                 </div>
