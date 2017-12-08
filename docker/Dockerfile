@@ -13,7 +13,7 @@ RUN docker-php-ext-configure bcmath \
 
 RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/bin/composer \
-    && echo "memory_limit = 2048M" >> /usr/local/etc/php/php.ini
+    && echo "memory_limit = 512M" >> /usr/local/etc/php/php.ini
 
 RUN apt-get update\
     && apt-get -y upgrade \
@@ -37,6 +37,11 @@ RUN pecl install xdebug \
     && echo "xdebug.profiler_enable=0" >> /usr/local/etc/php/php.ini \
     && echo "xdebug.profiler_output_dir=/var/app/var/xdebug/" >> /usr/local/etc/php/php.ini \
     && echo "xdebug.profiler_enable_trigger=1" >> /usr/local/etc/php/php.ini
+
+#prepiseme defaultni apache config
+RUN cat docker/apache2.conf > /etc/apache2/apache2.conf
+
+RUN mkdir /var/lib/php && mkdir /var/lib/php/sessions && chmod -R 777 /var/lib/php/sessions
 
 EXPOSE 80
 
