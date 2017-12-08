@@ -60,6 +60,10 @@ $(el) {
       opacity: 1;
     }
 
+    & ~ .mm-toogler .mm-toogler__title {
+      opacity: 0.7;
+    }
+
     & ~ .mm-toogler .mm-toogler__btn {
       &:nth-last-child(3) {
         transform: rotate(0deg) scale(0.2, 0.2);

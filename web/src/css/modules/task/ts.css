@@ -24,19 +24,19 @@ $(el) {
     width: 12px;
     height: 12px;
     border-radius: 6px;
-    background-color: #c7c7c7;
+    background-color: #f10202;
 
-    &--1 {
-      background-color: #f10202;
-    }
-    &--2 {
+    &--4 {
       background-color: #f77373;
     }
     &--3 {
       background-color: #f7ce73;
     }
-    &--4 {
+    &--2 {
       background-color: #b0dcf7;
+    }
+    &--1 {
+      background-color: #c7c7c7;
     }
   }
 

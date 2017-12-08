@@ -1,0 +1,13 @@
+.btn--logout:after {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin: 14px;
+  background: svg-load('./../../svg/exit.svg'), linear-gradient(transparent, transparent);
+  background-size: cover;
+}
+
+.btn--logout {
+  display: inline-block;
+}

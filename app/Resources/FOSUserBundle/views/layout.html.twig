@@ -9,19 +9,28 @@
 				margin: 0;
 				padding: 0;
 				background-color: #f9f9f9;
+				font-family: "Trebuchet MS", Tahoma, sans-serif;
 			}
 
 			body * {
 				box-sizing: border-box;
 			}
 
+			ul {
+				list-style: none;
+				padding: 0;
+				font-size: 12px;
+				color: red;
+			}
+
 			.fm {
 				display: block;
 				max-width: 320px;
-				margin: 60px auto;
+				font-family: "Trebuchet MS", Tahoma, sans-serif;
+				margin: 10px;
 				background: #ababab;
 				padding: 32px;
-				background-image: linear-gradient(#d9f6ff, #e0f1fb);
+				background-image: linear-gradient(#f1f1f1, #efefef);
 				box-shadow: 2px 2px 6px 1px #e0e0e0b5;
 				border:  1px solid #e0e0e0;
 			}
@@ -29,7 +38,7 @@
 			label {
 				margin-bottom: 8px;
 				display: block;
-				font-family: Arial, Helvetica, sans-serif;
+				font-family: "Trebuchet MS", Tahoma, sans-serif;
 				font-size: 14px;
 				font-weight: 700;
 			}
@@ -44,7 +53,7 @@
 
 			input {
 				background: #fff;
-				font-family: Arial, Helvetica, sans-serif;
+				font-family: "Trebuchet MS", Tahoma, sans-serif;
 				border: 1px solid #ececec;
 				outline: 0 none;
 			}
@@ -89,7 +98,34 @@
 				display: none;
 			}
 
+			a {
+				font-size: 14px;
+				text-align: center;
+				display: block;
+				margin-top: 16px;
+				color: #1796c7;
+			}
+
+			@media all and (min-width: 560px) {
+				.fm {
+					margin: 60px auto;
+				}
+			}
+
+
 		</style>
+
+		<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicons/apple-touch-icon.png') }}">
+		<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicons/favicon-32x32.png') }}">
+		<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicons/favicon-16x16.png') }}">
+		<link rel="manifest" href="{{ asset('images/favicons/manifest.json') }}">
+		<link rel="mask-icon" href="{{ asset('images/favicons/safari-pinned-tab.svg" color="#5bbad5') }}">
+		<link rel="shortcut icon" href="{{ asset('images/favicons/favicon.ico') }}">
+		<meta name="msapplication-config" content="{{ asset('images/favicons/browserconfig.xml') }}">
+		<meta name="theme-color" content="#ffffff">
+
+		<title>{% block title %}ITU{% endblock %}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 	<body>
 			<div class="ub ub--hide">
@@ -103,7 +139,7 @@
 				{% endif %}
 			</div>
 
-			{% if app.request.hasPreviousSession %}
+{# 			{% if app.request.hasPreviousSession %}
 				{% for type, messages in app.session.flashbag.all() %}
 					{% for message in messages %}
 						<div class="flash-{{ type }}">
@@ -111,12 +147,9 @@
 						</div>
 					{% endfor %}
 				{% endfor %}
-			{% endif %}
+			{% endif %} #}
 
 			<div class="fm">
-				<a href="{{ path('fos_user_security_login') }}">
-					<img src="{{ asset('images/logo.png') }}" alt="Nemocnice">
-				</a>
 				{% block fos_user_content %}
 				{% endblock fos_user_content %}
 			</div>

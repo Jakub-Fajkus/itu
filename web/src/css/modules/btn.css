@@ -23,12 +23,42 @@ $(el) {
     padding: 12px 18px;
   }
 
+  &--add {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #ababab;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 10px;
+      width: 1px;
+      height: 7px;
+      background-color: #fff;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 9px;
+      left: 7px;
+      width: 7px;
+      height: 1px;
+      background-color: #fff;
+    }
+  }
+
   &--fixed-add {
     position: absolute;
-    right: 18px;
-    bottom: 18px;
+    right: 22px;
+    bottom: 22px;
     width: 50px;
     height: 50px;
+    border: 0 none;
     border-radius: 25px;
     background-color: $green-color;
 
@@ -36,9 +66,20 @@ $(el) {
       content: '';
       position: absolute;
       top: 15px;
+      left: 24px;
+      width: 2px;
+      height: 20px;
+      background-color: #fff;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+
+      top: 24px;
       left: 15px;
       width: 20px;
-      height: 20px;
+      height: 2px;
       background-color: #fff;
     }
   }
@@ -47,6 +88,7 @@ $(el) {
 .add_wrapper {
   position: fixed;
   bottom: 0;
+  left: 0;
   width: 100vw;
   height: 80px;
   background: linear-gradient(transparent, #989896);
@@ -54,7 +96,7 @@ $(el) {
 
 @media all and ($medium-up) {
   .add_wrapper {
-    display: none;
+    /* display: none; */
   }
 }
 
