@@ -23,6 +23,35 @@ $(el) {
     padding: 12px 18px;
   }
 
+  &--add {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #ababab;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 10px;
+      width: 1px;
+      height: 7px;
+      background-color: #fff;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 9px;
+      left: 7px;
+      width: 7px;
+      height: 1px;
+      background-color: #fff;
+    }
+  }
+
   &--fixed-add {
     position: absolute;
     right: 22px;
@@ -63,14 +92,6 @@ $(el) {
   width: 100vw;
   height: 80px;
   background: linear-gradient(transparent, #989896);
-
-  btn--fixed-add {
-    &:after, &:before {
-      content: '';
-      display: block;
-      width: 20px;
-    }
-  }
 }
 
 @media all and ($medium-up) {

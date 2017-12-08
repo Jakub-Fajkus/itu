@@ -7,3 +7,7 @@
   background: svg-load('./../../svg/exit.svg'), linear-gradient(transparent, transparent);
   background-size: cover;
 }
+
+.btn--logout {
+  display: inline-block;
+}
