@@ -1,25 +1,74 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        <link rel="stylesheet" href="{{ asset('jquery/jquery-ui.css') }}">
-        <script src="{{ asset('jquery/jquery-1.12.4.js') }}"></script>
-        <script src="{{ asset('jquery/jquery-1.12.1-ui.js') }}"></script>
-        <script src="{{ asset('jquery/jquery.ui.touch-punch.min.js') }}"></script>
-    </head>
-    {% if jsController is defined and jsAction is defined%}
-        <input type="hidden" data-controller="name" value="{{ jsController }}">
-        <input type="hidden" data-controller="action" value="{{ jsAction }}">
-    {% endif %}
-    <body>
 
+	<head>
+		<meta charset="utf-8">
+		<title>{% block title %}ITU{% endblock %}</title>
 
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {% block body %}{% endblock %}
-        <script type="application/javascript" src="{{ asset('js/dist/bundle.js') }}"></script>
-        {% block javascripts %}{% endblock %}
-    </body>
+		<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicons/apple-touch-icon.png') }}">
+		<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicons/favicon-32x32.png') }}">
+		<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicons/favicon-16x16.png') }}">
+		<link rel="manifest" href="{{ asset('images/favicons/manifest.json') }}">
+		<link rel="mask-icon" href="{{ asset('images/favicons/safari-pinned-tab.svg" color="#5bbad5') }}">
+		<link rel="shortcut icon" href="{{ asset('images/favicons/favicon.ico') }}">
+		<meta name="msapplication-config" content="{{ asset('images/favicons/browserconfig.xml') }}">
+		<meta name="theme-color" content="#ffffff">
+
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/icons.css') }}" />
+
+		<link rel="stylesheet" media="none" type="text/css" href="{{ asset('jquery/jquery-ui.css') }}" onload="if(media!='all')media='all'">
+		<noscript>
+			<link rel="stylesheet" type="text/css" href="{{ asset('jquery/jquery-ui.css') }}">
+		</noscript>
+		<script async src="{{ asset('jquery/jquery-1.12.4.js') }}"></script>
+		<script async src="{{ asset('jquery/jquery-1.12.1-ui.js') }}"></script>
+		<script async src="{{ asset('jquery/jquery.ui.touch-punch.min.js') }}"></script>
+
+		{% if jsController is defined and jsAction is defined%}
+			<input type="hidden" data-controller="name" value="{{ jsController }}">
+			<input type="hidden" data-controller="action" value="{{ jsAction }}">
+		{% endif %}
+	</head>
+
+	<body>
+		<div class="page-wrapper">
+
+			<header class="header h">
+				<input type="checkbox" class="mm-toogle__input input-hidden" id="mm-toogler__input">
+				<label for="mm-toogler__input" class="mm-toogler">
+					<span class="mm-toogler__btn"></span>
+					<span class="mm-toogler__btn"></span>
+					<span class="mm-toogler__btn"></span>
+					<span class="mm-toogler__title">Menu</span>
+				</label>
+
+				<div class="mm__wrapper">
+					<ul class="mm">
+						<li class="mm__item">
+							<a href="#">Lorem ipsum</a></li>
+						<li class="mm__item">
+							<a href="#">Lorem ipsum</a></li>
+						<li class="mm__item">
+							<a href="#">Lorem ipsum</a></li>
+					</ul>
+				</div>
+			</header>
+
+			<div class="cwrapper">
+				<div class="container">
+					{% block body %}{% endblock %}
+				</div>
+			</div>
+
+			<footer class="footer">
+			</footer>
+
+			<script type="application/javascript" src="{{ asset('js/dist/bundle.js') }}"></script>
+			{% block javascripts %}
+			{% endblock %}
+		</div>
+	</body>
 </html>
