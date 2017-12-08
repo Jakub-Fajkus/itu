@@ -64,6 +64,15 @@ class Project
     private $isDefault = false;
 
     /**
+     * Project constructor.
+     */
+    public function __construct()
+    {
+        $this->tasks = new ArrayCollection();
+    }
+
+
+    /**
      * Get id
      *
      * @return int

@@ -23,7 +23,10 @@ class ProjectController extends Controller
     const ERROR = 'error';
     const INFO = 'info';
 
-//todo: vytvorit routy, vracejici jen html formulare(jen <form> pro project a task
+    //todo:
+//    new project -> cely project s taskama
+//    edit project -> cely project s taskama
+
     /**
      * Lists all project entities.
      *
@@ -49,9 +52,11 @@ class ProjectController extends Controller
      */
     public function getNewFormAction()
     {
-        $form = $this->createForm(ProjectType::class);
+        $form = $this->createForm(ProjectType::class, null, ['action' => $this->generateUrl('project_new')]);
 
-        return $this->render('project/newForm.html.twig', ['form' => $form->createView()]);
+        $html = $this->renderView('project/newForm.html.twig', ['form' => $form->createView()]);
+
+        return new JsonResponse(['html' => $html]);
     }
 
     /**
@@ -60,9 +65,11 @@ class ProjectController extends Controller
      */
     public function getEditFormAction(Project $project)
     {
-        $form = $this->createForm(ProjectType::class, $project);
+        $form = $this->createForm(ProjectType::class, $project,  ['action' => $this->generateUrl('project_edit', ['id' => $project->getId()])]);
 
-        return $this->render('project/editForm.html.twig', ['form' => $form->createView()]);
+        $html = $this->renderView('project/newForm.html.twig', ['form' => $form->createView()]);
+
+        return new JsonResponse(['html' => $html]);
     }
 
     /**
@@ -84,15 +91,19 @@ class ProjectController extends Controller
             $em->persist($project);
             $em->flush();
 
-            return $this->redirectToRoute('project_show', ['id' => $project->getId()]);
-        }
+            $html = $this->renderView('project/show.html.twig', ['project' => $project]);
 
-        return $this->render('project/new.html.twig', [
-            'project' => $project,
-            'form' => $form->createView(),
-            'jsController' => 'ProjectController',
-            'jsAction' => 'newAction',
-        ]);
+            return new JsonResponse(
+                ['html' => $html, 'status' => ProjectController::SUCCESS, 'flashMessage' => 'Úspěšně uloženo']
+            );
+        } else {
+            $msg = '';
+            foreach ($form->getErrors(true) as $error) {
+                $msg .= $error->getMessage();
+            }
+
+            return new JsonResponse(['status' => ProjectController::ERROR, 'flashMessage' => $msg]);
+        }
     }
 
     /**
@@ -133,16 +144,19 @@ class ProjectController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('project_edit', ['id' => $project->getId()]);
-        }
+            $html = $this->renderView('project/show.html.twig', ['project' => $project]);
 
-        return $this->render('project/edit.html.twig', [
-            'project' => $project,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-            'jsController' => 'ProjectController',
-            'jsAction' => 'editAction',
-        ]);
+            return new JsonResponse(
+                ['html' => $html, 'status' => ProjectController::SUCCESS, 'flashMessage' => 'Úspěšně uloženo']
+            );
+        } else {
+            $msg = '';
+            foreach ($editForm->getErrors(true) as $error) {
+                $msg .= $error->getMessage();
+            }
+
+            return new JsonResponse(['status' => ProjectController::ERROR, 'flashMessage' => $msg]);
+        }
     }
 
 
