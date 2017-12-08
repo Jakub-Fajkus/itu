@@ -1,0 +1,94 @@
+$el: .mm-toogler;
+
+$(el) {
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  font-size: 10px;
+  cursor: pointer;
+  text-transform: uppercase;
+  color: #fff;
+
+  &__btn {
+    display: block;
+    width: 30px;
+    height: 2px;
+    margin: 0 10px 6px;
+    transition: transform 0.3s cubic-bezier(0.77, 0.2, 0.05, 1.0), background 0.3s cubic-bezier(0.77, 0.2, 0.05, 1.0), opacity 0.35s ease;
+    transform-origin: 4px 0px;
+    border-radius: 2px;
+    background: #fff;
+
+    &:first-child {
+      margin-top: 10px;
+      transform-origin: 0% 0%;
+    }
+
+    &:nth-last-child(2) {
+      transform-origin: 0% 100%;
+    }
+
+  }
+
+  &__title {
+    position: absolute;
+    bottom: 5px;
+    display: block;
+    width: 50px;
+    text-align: center;
+  }
+}
+
+@media all and (min-width: $break-mobile-nav-min) {
+
+  $(el) {
+    position: absolute;
+    top: 54px;
+    border: none;
+  }
+}
+
+@media all and ($medium-up) {
+
+  $(el) {
+    display: none;
+  }
+}
+
+@media all and (max-width: 960px) {
+  #mm-toogler__input:checked {
+    & ~ .mm-toogler {
+      background: $active-color;
+    }
+
+    & ~ .mm-toogler .mm-toogler__btn {
+      transform: rotate(45deg) translateY(-2px) translateX(4px);
+      opacity: 1;
+    }
+
+    & ~ .mm-toogler .mm-toogler__btn {
+      &:nth-last-child(3) {
+        transform: rotate(0deg) scale(0.2, 0.2);
+        opacity: 0;
+      }
+
+      &:nth-last-child(2) {
+        transform: rotate(-45deg) translateY(9px);
+        opacity: 1;
+      }
+    }
+
+    & ~ .mm__wrapper {
+      transform: translateX(0);
+    }
+
+    & ~ .mm__wrapper .nav .nav__shadow {
+      visibility: visible;
+      opacity: .3;
+    }
+  }
+}
+

@@ -1,0 +1,17 @@
+$el: .h;
+
+.cwrapper {
+  padding-top: 60px;
+}
+
+$(el) {
+  position: fixed;
+  z-index: 9;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 50px;
+  background-color: #000000bd;
+}
