@@ -28,6 +28,8 @@ class ProjectController extends Controller
 
         return $this->render('project/index.html.twig', array(
             'projects' => $projects,
+            'jsController' => 'ProjectController',
+            'jsAction' => 'indexAction'
         ));
     }
 
@@ -54,6 +56,8 @@ class ProjectController extends Controller
         return $this->render('project/new.html.twig', array(
             'project' => $project,
             'form' => $form->createView(),
+            'jsController' => 'ProjectController',
+            'jsAction' => 'newAction'
         ));
     }
 
@@ -70,6 +74,8 @@ class ProjectController extends Controller
         return $this->render('project/show.html.twig', array(
             'project' => $project,
             'delete_form' => $deleteForm->createView(),
+            'jsController' => 'ProjectController',
+            'jsAction' => 'showAction'
         ));
     }
 
@@ -95,6 +101,8 @@ class ProjectController extends Controller
             'project' => $project,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'jsController' => 'ProjectController',
+            'jsAction' => 'editAction',
         ));
     }
 

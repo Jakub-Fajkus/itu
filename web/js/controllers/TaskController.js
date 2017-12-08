@@ -1,6 +1,6 @@
 import BaseController from './BaseController';
 
-export default class ProjectController extends BaseController{
+export default class TaskController extends BaseController{
     indexAction(){
         console.log(this.scopeElements);
     }

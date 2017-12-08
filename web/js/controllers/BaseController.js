@@ -35,10 +35,8 @@ export default class BaseController {
                     _.each($el.children(), line => {
                         if (!$(line).hasClass('ui-sortable-placeholder')) {
                             data.push(line.getAttribute('data-sort-name'));
-                            console.log(line);
                         }
                     });
-                    console.log(data);
                     postJSON(definition.url, data)
                         .then(() => {
                             $el.sortable("option", {disabled: false});

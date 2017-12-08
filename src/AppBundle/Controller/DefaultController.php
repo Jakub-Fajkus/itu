@@ -43,6 +43,7 @@ class DefaultController extends Controller
      */
     public function setSortedExampleAction(Request $request)
     {
+        dump(json_decode($request->getContent()));
         if (true) {
             return new JsonResponse([], 200);
         }

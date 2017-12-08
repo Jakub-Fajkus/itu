@@ -28,6 +28,8 @@ class TagController extends Controller
 
         return $this->render('tag/index.html.twig', array(
             'tags' => $tags,
+            'jsController' => 'TagController',
+            'jsAction' => 'indexAction',
         ));
     }
 
@@ -54,6 +56,8 @@ class TagController extends Controller
         return $this->render('tag/new.html.twig', array(
             'tag' => $tag,
             'form' => $form->createView(),
+            'jsController' => 'TagController',
+            'jsAction' => 'newAction',
         ));
     }
 
@@ -70,6 +74,8 @@ class TagController extends Controller
         return $this->render('tag/show.html.twig', array(
             'tag' => $tag,
             'delete_form' => $deleteForm->createView(),
+            'jsController' => 'TagController',
+            'jsAction' => 'showAction',
         ));
     }
 
@@ -95,6 +101,8 @@ class TagController extends Controller
             'tag' => $tag,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'jsController' => 'TagController',
+            'jsAction' => 'editAction',
         ));
     }
 

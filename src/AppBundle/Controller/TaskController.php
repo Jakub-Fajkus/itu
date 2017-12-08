@@ -29,6 +29,8 @@ class TaskController extends Controller
 
         return $this->render('task/index.html.twig', [
             'tasks' => $tasks,
+            'jsController' => 'TaskController',
+            'jsAction' => 'indexAction'
         ]);
     }
 
@@ -55,6 +57,8 @@ class TaskController extends Controller
         return $this->render('task/new.html.twig', [
             'task' => $task,
             'form' => $form->createView(),
+            'jsController' => 'TaskController',
+            'jsAction' => 'newAction'
         ]);
     }
 
@@ -71,6 +75,8 @@ class TaskController extends Controller
         return $this->render('task/show.html.twig', [
             'task' => $task,
             'delete_form' => $deleteForm->createView(),
+            'jsController' => 'TaskController',
+            'jsAction' => 'showAction'
         ]);
     }
 
@@ -96,6 +102,8 @@ class TaskController extends Controller
             'task' => $task,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'jsController' => 'TaskController',
+            'jsAction' => 'editAction'
         ]);
     }
 
