@@ -1,48 +1,14 @@
-{% extends 'base.html.twig' %}
+<li data-sort-name="{{ task.id }}" class="ui-state-default ts {% if task.completed %} ts--completed {% endif %}">
+    {# TODO open edit action #}
+    <a href="#">
+        <p class="ts__title">{{ task.name }}</p>
+    </a>
 
-{% block body %}
-    <h1>Task</h1>
+    <input type="checkbox" class="hidden" id="checkbox-{{ task.id }}" {% if task.completed %} checked {% endif %}>
+    <label for="checkbox-{{ task.id }}" class="ts__checkbox"></label>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ task.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ task.name }}</td>
-            </tr>
-            <tr>
-                <th>Priority</th>
-                <td>{{ task.priority }}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{% if task.createdAt %}{{ task.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Due</th>
-                <td>{% if task.due %}{{ task.due|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Tags</th>
-                <td>{% for tag in task.tags %} {{ tag.name }} {% endfor %}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('task_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('task_edit', { 'id': task.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
-{% endblock %}
+    <div class="ts__adons">
+        <span class="ts__priority ts__priority--{{ task.priority }}"></span>
+        <span class="ts__date">{% if task.createdAt %}{{ task.createdAt|date('Y-m-d H:i:s') }}{% endif %}{% if task.due %} - {{ task.due|date('Y-m-d H:i:s') }}{% endif %}</span>
+    </div>
+</li>

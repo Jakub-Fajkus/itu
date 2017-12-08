@@ -1,32 +1,25 @@
-{% extends 'base.html.twig' %}
+<div class="pr" data-sort-name="{{ project.id }}">
+    <div class="pr__header">
+        <h2 class="pr__title">{{ project.name }}</h2>
+        <div class="pr__action">
+            {# TODO open edit project #}
+            <a href="#" class="btn--edit"></a>
+        </div>
+    </div>
 
-{% block body %}
-    <h1>Project</h1>
+    <ul data-sortGroup="tasks" class="pr__content" data-sortable="{{ {url:path('project_reorder_tasks', {'id': project.id}) , settings: {placeholder: 'ui-state-highlight', cancel: '[data-not-dragable="true"]'} }|json_encode }}">
+        {% set completed = {} %}
+        {% for task in project.tasks %}
+            {% if task.completed %}
+                {% set completed = completed|merge([task]) %}
+            {% else %}
+                {#//task#}
+                {% include "task/show.html.twig" with {'task': task} %}
+            {% endif %}
+        {% endfor %}
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ project.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ project.name }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('project_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('project_edit', { 'id': project.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
+        {% for task in completed %}
+            {% include "task/show.html.twig" with {'task': task} %}
+        {% endfor %}
     </ul>
-{% endblock %}
+</div>

@@ -3,59 +3,9 @@
 {% block body %}
 	<div id="wrapper">
 		<div id="container" data-sortGroup="projects" data-sortable="{{ {url:path('project_reorder') , settings: {placeholder: 'ui-state-highlight'} }|json_encode }}">
-		{% for project in projects %}
-			<div class="pr" data-sort-name="{{ project.id }}">
-				<div class="pr__header">
-					<h2 class="pr__title">{{ project.name }}</h2>
-					<div class="pr__action">
-						{# TODO open edit project #}
-						<a href="#" class="btn--edit"></a>
-					</div>
-				</div>
-
-				<ul data-sortGroup="tasks" class="pr__content" data-sortable="{{ {url:path('project_reorder_tasks', {'id': project.id}) , settings: {placeholder: 'ui-state-highlight', cancel: '[data-not-dragable="true"]'} }|json_encode }}">
-
-				{% set completed = {} %}
-				{% for task in project.tasks %}
-					{% if task.completed %}
-						{% set completed = completed|merge([task]) %}
-					{% else %}
-						<li data-sort-name="{{ task.id }}" class="ui-state-default ts">
-							{# TODO open edit action #}
-							<a href="#">
-								<p class="ts__title">{{ task.name }}</p>
-							</a>
-
-							<input type="checkbox" class="hidden" id="checkbox-{{ task.id }}">
-							<label for="checkbox-{{ task.id }}" class="ts__checkbox"></label>
-
-							<div class="ts__adons">
-								<span class="ts__priority ts__priority--{{ task.priority }}"></span>
-								<span class="ts__date">{% if task.createdAt %}{{ task.createdAt|date('Y-m-d H:i:s') }}{% endif %}{% if task.due %} - {{ task.due|date('Y-m-d H:i:s') }}{% endif %}</span>
-							</div>
-						</li>
-					{% endif %}
-				{% endfor %}
-
-				{% for task in completed %}
-					<li data-sort-name="{{ task.id }}" class="ui-state-default ts ts--completed">
-						{# TODO open edit action #}
-						<a href="#">
-							<p class="ts__title">{{ task.name }}</p>
-						</a>
-
-						<input type="checkbox" class="hidden" id="checkbox-{{ task.id }}">
-						<label for="checkbox-{{ task.id }}" class="ts__checkbox"></label>
-
-						<div class="ts__adons">
-							<span class="ts__priority ts__priority--{{ task.priority }}"></span>
-							<span class="ts__date">{% if task.createdAt %}{{ task.createdAt|date('Y-m-d H:i:s') }}{% endif %}{% if task.due %} - {{ task.due|date('Y-m-d H:i:s') }}{% endif %}</span>
-						</div>
-					</li>
-				{% endfor %}
-				</ul>
-			</div>
-		{% endfor %}
+            {% for project in projects %}
+				{% include "project/show.html.twig" with {'project': project} only %}
+            {% endfor %}
 		</div>
 	</div>
 
