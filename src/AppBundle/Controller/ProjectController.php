@@ -23,10 +23,6 @@ class ProjectController extends Controller
     const ERROR = 'error';
     const INFO = 'info';
 
-    //todo:
-//    new project -> cely project s taskama
-//    edit project -> cely project s taskama
-
     /**
      * Lists all project entities.
      *
