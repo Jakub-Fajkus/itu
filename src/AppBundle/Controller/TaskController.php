@@ -17,11 +17,6 @@ use AppBundle\Form\TaskType;
  */
 class TaskController extends Controller
 {
-    //todo:
-//    new project -> cely project s taskama
-//    new task -> cely projekt s taskama
-//    edit project -> cely project s taskama
-//    edit task -> cely projekt s taskama
 
     /**
      * Lists all task entities.
@@ -48,9 +43,11 @@ class TaskController extends Controller
      */
     public function getNewFormAction()
     {
-        $form = $this->createForm(TaskType::class);
+        $form = $this->createForm(TaskType::class, null, ['action' => $this->generateUrl('task_new')]);
 
         $html = $this->renderView('task/newForm.html.twig', ['form' => $form->createView()]);
+
+//        return new Response($html);
 
         return new JsonResponse(['html' => $html]);
     }
@@ -85,15 +82,19 @@ class TaskController extends Controller
             $em->persist($task);
             $em->flush();
 
-            return $this->redirectToRoute('task_show', ['id' => $task->getId()]);
-        }
+            $html = $this->renderView('project/show.html.twig', ['project' => $task->getProject()]);
 
-        return $this->render('task/new.html.twig', [
-            'task' => $task,
-            'form' => $form->createView(),
-            'jsController' => 'TaskController',
-            'jsAction' => 'newAction',
-        ]);
+            return new JsonResponse(
+                ['html' => $html, 'status' => ProjectController::SUCCESS, 'flashMessage' => 'Úspěšně uloženo']
+            );
+        } else {
+            $msg = '';
+            foreach ($form->getErrors(true) as $error) {
+                $msg .= $error->getMessage();
+            }
+
+            return new JsonResponse(['status' => ProjectController::ERROR, 'flashMessage' => $msg]);
+        }
     }
 
     /**
@@ -128,8 +129,11 @@ class TaskController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            //todo: vratit cely projekt
-            return $this->render("task/show.html.twig", ['task' => $task]);
+            $html = $this->renderView('project/show.html.twig', ['project' => $task->getProject()]);
+
+            return new JsonResponse(
+                ['html' => $html, 'status' => ProjectController::SUCCESS, 'flashMessage' => 'Úspěšně uloženo']
+            );
         } else {
             $msg = '';
             foreach ($editForm->getErrors(true) as $error) {
