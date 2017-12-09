@@ -14,12 +14,8 @@ export default class DefaultController extends BaseController {
                             (response) => {
                                 let $new = $(response.html);
                                 let $container = $('[data-sortgroup="projects"]');
-                                if($container.length) {
-                                    $container.children().last().after($new);
-                                }
-                                else {
-                                    $container.append($new);
-                                }
+                                $container.append($new);
+
                                 dnd($new);
                                 ip($new);
                             }

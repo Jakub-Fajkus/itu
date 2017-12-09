@@ -25198,11 +25198,8 @@ var DefaultController = function (_BaseController) {
                     form.onSuccess(function (response) {
                         var $new = $(response.html);
                         var $container = $('[data-sortgroup="projects"]');
-                        if ($container.length) {
-                            $container.children().last().after($new);
-                        } else {
-                            $container.append($new);
-                        }
+                        $container.append($new);
+
                         dnd($new);
                         ip($new);
                     });
