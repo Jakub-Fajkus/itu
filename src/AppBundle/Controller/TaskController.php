@@ -39,16 +39,18 @@ class TaskController extends Controller
     }
 
     /**
-     * @Route("/new-form", name="task_new_form")
+     * @Route("/new-form/{id}", name="task_new_form")
      * @Method("GET")
+     *
+     * @param $id
+     *
+     * @return JsonResponse
      */
-    public function getNewFormAction()
+    public function getNewFormAction($id)
     {
-        $form = $this->createForm(TaskType::class, null, ['action' => $this->generateUrl('task_new')]);
+        $form = $this->createForm(TaskType::class, null, ['action' => $this->generateUrl('task_new', ['id' => $id])]);
 
         $html = $this->renderView('task/newForm.html.twig', ['form' => $form->createView()]);
-
-//        return new Response($html);
 
         return new JsonResponse(['html' => $html]);
     }
@@ -69,12 +71,14 @@ class TaskController extends Controller
     /**
      * Creates a new task entity.
      *
-     * @Route("/new", name="task_new")
+     * @Route("/new/{id}", name="task_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, Project $project)
     {
         $task = new Task();
+        $task->setProject($project);
+
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
         $tasks = $task->getProject()->getTasks()->toArray();

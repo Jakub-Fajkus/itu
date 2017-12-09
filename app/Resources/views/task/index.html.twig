@@ -39,7 +39,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('task_new') }}">Create a new task</a>
+            <a href="{{ path('task_new', {'id': task.project.id}) }}">Create a new task</a>
         </li>
     </ul>
 {% endblock %}
