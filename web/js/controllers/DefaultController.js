@@ -13,7 +13,13 @@ export default class DefaultController extends BaseController {
                         form.onSuccess(
                             (response) => {
                                 let $new = $(response.html);
-                                $(this).closest('div[data-sort-name]').append();
+                                let $container = $('[data-sortgroup="projects"]');
+                                if($container.length) {
+                                    $container.children.first().after($new);
+                                }
+                                else {
+                                    $container.append($new);
+                                }
                                 dnd($new);
                                 ip($new);
                             }
@@ -33,7 +39,7 @@ export default class DefaultController extends BaseController {
         $parent.find('[data-multipleSelector="editProject"]').click(edit);
 
 
-        $parent.find('[data-new-url]').click(function () {
+        $parent.find('[data-handle="project"]').find('[data-new-url]').click(function () {
             modal.loadFormNow(this.getAttribute('data-new-url')).then(
                 (form) => {
                     let $project = $(this).closest('div[data-sort-name]'),

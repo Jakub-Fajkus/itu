@@ -58,7 +58,9 @@ export default class Modal {
 
     loadFormNow(url)
     {
+        debugger;
         return this.load(url).then(()=> {
+            debugger;
             this.setContent();
             this.show();
             return this.initForm();
