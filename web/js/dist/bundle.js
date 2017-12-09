@@ -25270,7 +25270,7 @@ var DefaultController = function (_BaseController) {
                         me($new);
                     });
                     modal.deleteForm.onSuccess(function () {
-                        $(_this5).closest('div[data-sort-name]').remove();
+                        $(_this5).closest('[data-sort-name]').remove();
                     });
                 });
             }
