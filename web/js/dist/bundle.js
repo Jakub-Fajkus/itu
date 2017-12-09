@@ -25199,7 +25199,7 @@ var DefaultController = function (_BaseController) {
                         var $new = $(response.html);
                         var $container = $('[data-sortgroup="projects"]');
                         if ($container.length) {
-                            $container.children().first().after($new);
+                            $container.children().last().after($new);
                         } else {
                             $container.append($new);
                         }

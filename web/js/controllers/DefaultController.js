@@ -15,7 +15,7 @@ export default class DefaultController extends BaseController {
                                 let $new = $(response.html);
                                 let $container = $('[data-sortgroup="projects"]');
                                 if($container.length) {
-                                    $container.children().first().after($new);
+                                    $container.children().last().after($new);
                                 }
                                 else {
                                     $container.append($new);
