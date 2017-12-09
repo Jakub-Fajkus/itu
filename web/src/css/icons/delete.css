@@ -1,0 +1,8 @@
+button[type=submit].delete:before {
+  content: '';
+  display: block;
+  width: 46px;
+  height: 46px;
+  background: svg-load('./../../svg/delete.svg'), linear-gradient(transparent, transparent);
+  background-size: cover;
+}

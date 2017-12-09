@@ -1,4 +1,12 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-<input type="submit" value="Vytvořit" />
+
+	{{ form_row(form.name) }}
+  <div class="fm__selectbox">
+  	{{ form_row(form.priority) }}
+  </div>
+  {{ form_widget(form) }}
+
+  <div>
+		<button type="submit" title="Vytvořit"/>
+	</div>
 {{ form_end(form) }}

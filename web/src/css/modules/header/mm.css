@@ -18,7 +18,7 @@ $(el) {
       position: relative;
       display: block;
       padding: 18px 0;
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 600;
       text-align: center;
 
@@ -43,14 +43,17 @@ $(el) {
 
 @media all and ($medium-up) {
   $(el) {
+    margin: 0;
+
     &__wrapper {
       position: relative;
       top: 0;
-      display: block;
+      display: inline-block;
       width: auto;
       height: auto;
       margin: 0 auto;
       transform: translate3D(0,0,0);
+      vertical-align: top;
       background-color: transparent;
     }
 
@@ -60,10 +63,14 @@ $(el) {
       a {
         position: relative;
         display: block;
-        padding: 18px 0;
+        padding: 14px 14px;
         font-size: 16px;
         font-weight: 600;
         color: #fff;
+
+        &:hover {
+          color: $link-color;
+        }
 
         &:after {
           content: none;

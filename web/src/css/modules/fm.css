@@ -1,0 +1,83 @@
+label {
+  font-weight: 600;
+}
+
+form {
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+input, label, select, textarea {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  font-size: 14px;
+  outline: none;
+}
+
+input, select, textarea {
+  margin: 12px auto;
+  padding: 10px;
+  border: 1px solid $border-color;
+  border-radius: 2px;
+  background-color: #fff;
+
+  &:focus {
+    border: 1px solid #ababab;
+  }
+}
+
+input[type=submit] {
+  display: inline-block;
+  width: auto;
+  padding: 12px 14px;
+}
+
+textarea {
+  height: 120px;
+  resize: none;
+}
+
+input[type=checkbox], input[type=radio] {
+  display: none;
+}
+
+input[value="Vytvořit"] {
+  float: right;
+  padding-right: 16px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background-color: $green-color;
+}
+
+.picker__input {
+  float: left;
+  width: 30%;
+  text-align: center;
+}
+
+.picker__input:nth-of-type(2) {
+  width: 60%;
+  margin-right: 10%;
+}
+
+.fm__selectbox {
+  position: relative;
+  display: block;
+  max-width: 320px;
+  margin: 0 auto;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 46px;
+    right: 10px;
+    display: block;
+    transition: .3s;
+    border-top: solid 6px #a0a8b5;
+    border-right: solid 6px transparent;
+    border-left: solid 6px transparent;
+  }
+}

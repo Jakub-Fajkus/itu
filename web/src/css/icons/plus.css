@@ -1,0 +1,18 @@
+.btn--fixed-add:before {
+  content: '';
+  display: block;
+  width: 52px;
+  height: 52px;
+  background: svg-load('./../../svg/plus.svg'), linear-gradient(transparent, transparent);
+  background-size: cover;
+}
+
+.btn--add:before {
+  content: '';
+  display: block;
+  width: 22px;
+  height: 22px;
+  background: svg-load('./../../svg/plus.svg'), linear-gradient(transparent, transparent);
+  background-size: cover;
+}
+

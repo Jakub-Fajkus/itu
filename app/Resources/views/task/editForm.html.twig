@@ -1,12 +1,17 @@
 {{ form_start(form) }}
-        {{ form_widget(form) }}
-<input type="submit" value="Upravit"/>
+	{{ form_row(form.name) }}
+  <div class="fm__selectbox">
+  	{{ form_row(form.priority) }}
+  </div>
+  {{ form_row(form.due) }}
+  <div>
+		<button type="submit" title="Upravit"></button>
+	</div>
 {{ form_end(form) }}
 
 
 
 {{ form_start(deleteForm) }}
-        {{ form_widget(deleteForm) }}
-{#TODO: @DAVE make it nice, pls#}
-<input type="submit" value="Smazat (JSEM MOOOOOC HNUSNEJ, ZMENTE MNE...)" />
+   {{ form_widget(deleteForm) }}
+	<button type="submit" value="Smazat" class="delete">Smazat</button>
 {{ form_end(deleteForm) }}

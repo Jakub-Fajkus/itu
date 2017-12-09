@@ -14,7 +14,7 @@ html {
 }
 
 /* default form */
-/* input, textarea, select {
+input, textarea, select {
   -webkit-appearance: none;
 }
 
@@ -37,11 +37,11 @@ input[type=number]::-webkit-inner-spin-button {
 
 input[type=number] {
   -moz-appearance: textfield;
-} */
+}
 
-/* textarea {
+textarea {
   resize: none;
-} */
+}
 
 /* links */
 a, button {
@@ -163,6 +163,25 @@ b, strong {
 
 .hidden {
   display: none;
+}
+
+.ui-sortable-helper {
+  background-color: #fbf6e7 !important;
+}
+
+.ui-sortable-placeholder {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#container.ui-sortable {
+  padding-bottom: 100px;
+}
+
+.hide-completed {
+  .ts--completed {
+    display: none;
+  }
 }
 
 

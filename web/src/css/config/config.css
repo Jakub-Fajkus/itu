@@ -18,7 +18,7 @@ $zindex-modal-window: 9999;
 $font-main: "Trebuchet MS", Tahoma, sans-serif;
 
 
-$body-background-color: #fff;
+$body-background-color: #f1f1f1;
 $default-text-color: #000;
 $link-color: #1fb7e4;
 $active-color: $link-color;

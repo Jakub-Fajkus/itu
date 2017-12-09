@@ -7,9 +7,18 @@ $(el) {
   margin: 18px auto;
   padding: 8px;
   font-size: 18px;
-  border-radius: 10px;
-  background-color: #f7f7f7;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.16);
+  border-radius: 1px;
+  background-color: #fff;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.12);
+
+  &--default {
+    background-color: #ffffff9e;
+
+    .pr__title {
+      font-size: 14px;
+      cursor: auto;
+    }
+  }
 
   &__title {
     display: inline-block;
@@ -25,12 +34,40 @@ $(el) {
     }
   }
 
-  &__header {
+  &__title {
+    float: left;
+    width: 65%;
     cursor: move;
+
+    &:hover {
+      background-color:;
+    }
   }
 
   &__action {
     float: right;
+    width: 25%;
+    text-align: right;
+
+
+    .btn--add:hover, .btn--edit:hover {
+      opacity: .7;
+      filter: grayscale(10%);
+    }
+
+    .btn--add {
+      width: 23px;
+      transition: .3s;
+      opacity: .9;
+      filter: grayscale(100%);
+    }
+
+    .btn--edit {
+      width: 23px;
+      transition: .3s;
+      opacity: .7;
+      filter: grayscale(100%);
+    }
   }
 
   &__content {

@@ -3,6 +3,6 @@
   display: block;
   width: 22px;
   height: 22px;
-  background: svg-load('./../../svg/pencil2.svg'), linear-gradient(transparent, transparent);
+  background: svg-load('./../../svg/edit.svg'), linear-gradient(transparent, transparent);
   background-size: cover;
 }

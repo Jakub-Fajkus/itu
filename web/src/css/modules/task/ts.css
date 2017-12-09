@@ -2,20 +2,26 @@ $el: .ts;
 
 $(el) {
   position: relative;
-  margin: 6px 0;
-  padding: 8px;
+  margin: 3px 0;
+  padding: 6px;
   font-size: 12px;
+  cursor: move;
   border: 1px solid #e4e4e4;
   background-color: #efefef;
+
+  &--completed {
+    opacity: .48;
+  }
 
   &__title {
     position: relative;
     overflow: hidden;
     margin: 0 30px 8px 0;
     padding: 6px;
+    cursor: pointer;
     white-space: nowrap;
     text-overflow: ellipsis;
-    border-radius: 3px;
+    border-radius: 2px;
     background-color: #fff;
   }
 
@@ -26,16 +32,13 @@ $(el) {
     border-radius: 6px;
     background-color: #f10202;
 
-    &--4 {
-      background-color: #f77373;
-    }
-    &--3 {
+    &--2 {
       background-color: #f7ce73;
     }
-    &--2 {
+    &--1 {
       background-color: #b0dcf7;
     }
-    &--1 {
+    &--0 {
       background-color: #c7c7c7;
     }
   }
@@ -63,6 +66,7 @@ $(el) {
     right: 4px;
     width: 28px;
     height: 28px;
+    cursor: pointer;
     border: 1px solid #e4e4e4;
     border-radius: 14px;
     background-color: #fff;
@@ -79,6 +83,7 @@ $(el) {
 
   &__adons {
     position: relative;
+    padding-top: 4px;
 
     &:after {
       content: '';

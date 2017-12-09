@@ -1,14 +1,12 @@
 <div class="pr" data-default-project="{{ project.default }}" data-sort-name="{{ project.id }}">
-    <div class="pr__header" data-handle="project" data-edit-url="{{ path('project_edit_form', {id: project.id}) }}">
+    <div class="pr__header ca" data-handle="project" data-edit-url="{{ path('project_edit_form', {id: project.id}) }}">
         <h2 class="pr__title">{{ project.name }}</h2>
         <div class="pr__action">
-            {#TODO @DAVE přidat cursor pointer#}
-            <span data-new-url="{{ path('task_new_form', {'id': project.id}) }}" class="btn--add"></span>
-            {#TODO @DAVE třída btn--edit dělá tenhle element neklikatelnej#}
             {% if not project.default %}
                 {#nedovolime upravit vychozi projekt pro tasky bez projektu#}
-                <span data-edit-url="{{ path('project_edit_form', {id: project.id}) }}" data-multipleSelector="editProject">Upravit</span>
+                <span data-edit-url="{{ path('project_edit_form', {id: project.id}) }}" data-multipleSelector="editProject" class="btn--edit"></span>
             {% endif %}
+            <span data-new-url="{{ path('task_new_form', {'id': project.id}) }}" class="btn--add"></span>
         </div>
     </div>
 

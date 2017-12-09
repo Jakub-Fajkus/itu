@@ -16,8 +16,8 @@ $(el) {
   &__close {
     position: absolute;
     z-index: calc($zindex-modal-window + 5);
-    top: 10px;
-    right: 10px;
+    top: 26px;
+    right: 26px;
     left: auto;
     font-size: 30px;
     line-height: 26px;
@@ -33,7 +33,6 @@ $(el) {
     position: relative;
     z-index: calc($zindex-modal-window + 2);
     overflow-y: auto;
-    width: 100%;
     min-height: 100px;
     margin: 16px;
     padding: 20px;

@@ -24,7 +24,7 @@ class TaskType extends AbstractType
         $now = new \DateTime();
         $currentYear = (int)$now->format('Y');
         $builder
-            ->add('name', null, ['label' => 'Jméno'])
+            ->add('name', null, ['label' => 'Popis úkolu'])
             ->add('priority', ChoiceType::class, ['label' => 'Priorita', 'choices' => ['Nízká' => 0, 'Střední' => 1, 'Vysoká' => 2, 'Nejvyšší' => 3]])
             ->add('due', TextType::class, [
                 'required' => false,

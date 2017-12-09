@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="405px" height="405px" viewBox="0 0 405 405" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>check</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#B4EC51" offset="0%"></stop>
+            <stop stop-color="#51B528" offset="96.8969228%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#BF0000" offset="0%"></stop>
+            <stop stop-color="#740000" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="check">
+            <g id="Oval">
+                <g id="path-2-link" style="mix-blend-mode: lighten;" fill="url(#linearGradient-1)">
+                    <circle id="path-2" cx="202.5" cy="202.5" r="202.5"></circle>
+                </g>
+                <g id="path-2-link" fill="url(#linearGradient-2)" fill-rule="nonzero">
+                    <circle id="path-2" cx="202.5" cy="202.5" r="202.5"></circle>
+                </g>
+            </g>
+            <g id="Group" stroke-linecap="square" transform="translate(130.000000, 132.000000)" stroke="#FFFFFF" stroke-width="40">
+                <path d="M0,142 L146,0" id="Line-2"></path>
+                <path d="M0,142 L146,0" id="Line-2" transform="translate(73.000000, 71.000000) scale(-1, 1) translate(-73.000000, -71.000000) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

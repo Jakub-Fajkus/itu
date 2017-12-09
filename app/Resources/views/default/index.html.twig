@@ -1,8 +1,18 @@
 {% extends 'base.html.twig' %}
 
+{% block menu %}
+		<div class="mm__wrapper">
+		<ul class="mm">
+			<li class="mm__item"><a data-selector="addProject" data-new-url="{{ path('project_new_form') }}">Nový projekt</a></li>
+			<li class="mm__item"><a href="#">Nový úkol</a></li>
+			<li class="mm__item"><a href="#">Skrýt vyřešené</a></li>
+			<li class="mm__item"><a href="#">Nápověda</a></li>
+		</ul>
+	</div>
+{% endblock %}
+
 {% block body %}
 	<div id="wrapper">
-		{# todo @DAVE prázdný projekt je moc malý na drag and drop EDIT: @FIK nevi co s tim#}
 		<div id="container">
             {% for project in projects[0:1] %}
                 {% include "project/show.html.twig" with {'project': project} only %}
