@@ -63,7 +63,9 @@ class TaskController extends Controller
     {
         $form = $this->createForm(TaskType::class, $task, ['action' => $this->generateUrl('task_edit', ['id' => $task->getId()])]);
 
-        $html = $this->renderView('task/editForm.html.twig', ['form' => $form->createView()]);
+        $deleteForm = $this->createDeleteForm($task);
+
+        $html = $this->renderView('task/editForm.html.twig', ['form' => $form->createView(), 'deleteForm' => $deleteForm->createView()]);
 
         return new JsonResponse(['html' => $html]);
     }
@@ -215,9 +217,11 @@ class TaskController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($task);
             $em->flush();
+
+            return new JsonResponse(['status' => self::SUCCESS, 'flashMessage' => 'Úspěšně smazáno']);
         }
 
-        return $this->redirectToRoute('task_index');
+        return new JsonResponse(['status' => self::ERROR, 'flashMessage' => 'Nepodařilo se smazat úkol']);
     }
 
     /**

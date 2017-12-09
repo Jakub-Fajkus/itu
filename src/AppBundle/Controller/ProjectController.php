@@ -63,8 +63,9 @@ class ProjectController extends Controller
     public function getEditFormAction(Project $project)
     {
         $form = $this->createForm(ProjectType::class, $project, ['action' => $this->generateUrl('project_edit', ['id' => $project->getId()])]);
+        $deleteForm = $this->createDeleteForm($project);
 
-        $html = $this->renderView('project/newForm.html.twig', ['form' => $form->createView()]);
+        $html = $this->renderView('project/editForm.html.twig', ['form' => $form->createView(), 'deleteForm' => $deleteForm->createView()]);
 
         return new JsonResponse(['html' => $html]);
     }
@@ -203,7 +204,7 @@ class ProjectController extends Controller
     /**
      * Deletes a project entity.
      *
-     * @Route("/{id}", name="project_delete")
+     * @Route("/delete/{id}", name="project_delete")
      * @Method("DELETE")
      * @param Request $request
      * @param Project $project
@@ -218,9 +219,11 @@ class ProjectController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($project);
             $em->flush();
+
+            return new JsonResponse(['status' => self::SUCCESS, 'flashMessage' => 'Úspěšně smazáno']);
         }
 
-        return $this->redirectToRoute('project_index');
+        return new JsonResponse(['status' => self::ERROR, 'flashMessage' => 'Nepodařilo se smazat projekt']);
     }
 
     /**
