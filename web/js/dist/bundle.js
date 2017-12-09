@@ -25269,6 +25269,9 @@ var DefaultController = function (_BaseController) {
                         dnd($new);
                         me($new);
                     });
+                    modal.deleteForm.onSuccess(function () {
+                        $(_this5).closest('div[data-sort-name]').remove();
+                    });
                 });
             }
         }
@@ -42517,6 +42520,10 @@ var _Form = __webpack_require__(456);
 
 var _Form2 = _interopRequireDefault(_Form);
 
+var _lodash = __webpack_require__(454);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42533,6 +42540,7 @@ var Modal = function () {
         this.form = undefined;
         this.locked = false;
         this.lastLoaded = '';
+        this.deleteForm = undefined;
 
         this.$wrapper = (0, _helpers.forceJquery)(wrapper);
         this.$container = (0, _helpers.forceJquery)(container);
@@ -42607,7 +42615,17 @@ var Modal = function () {
     }, {
         key: "initForm",
         value: function initForm() {
-            return this.form = new _Form2.default(this.$wrapper.find('form'), this);
+            this.deleteForm = undefined;
+            this.form = undefined;
+            var forms = this.$wrapper.find('form');
+            if (forms[0]) {
+                this.form = new _Form2.default(forms.eq(0), this);
+            }
+            if (forms[1]) {
+                this.deleteForm = new _Form2.default(forms.eq(1), this);
+            }
+
+            return this.form;
         }
     }]);
 
@@ -42711,9 +42729,8 @@ var Form = function () {
                     _this._onSuccess(data);
                 },
                 data: new FormData(_this.formElement),
-                error: function error(XMLHttpRequest, textStatus, errorThrown) {
-                    /*todo*/
-                    console.error(data);
+                error: function error(XMLHttpRequest, textStatus, errorThrown) {/*todo*/
+                    // console.error(data);
                 }
             });
         });

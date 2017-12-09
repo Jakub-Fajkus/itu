@@ -70,7 +70,7 @@ export default class Form {
                 },
                 data: new FormData(this.formElement),
                 error: (XMLHttpRequest, textStatus, errorThrown) => {/*todo*/
-                    console.error(data);
+                    // console.error(data);
                 }
             });
         });

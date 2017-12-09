@@ -3,8 +3,13 @@
 {% block body %}
 	<div id="wrapper">
 		{# todo @DAVE prázdný projekt je moc malý na drag and drop EDIT: @FIK nevi co s tim#}
+		<div id="container">
+            {% for project in projects[0:1] %}
+                {% include "project/show.html.twig" with {'project': project} only %}
+            {% endfor %}
+		</div>
 		<div id="container" data-sortGroup="projects" data-sortable="{{ {url:path('project_reorder') , settings: {placeholder: 'ui-state-highlight', handle: '[data-handle="project"]'} }|json_encode }}">
-            {% for project in projects %}
+            {% for project in projects[1:] %}
 				{% include "project/show.html.twig" with {'project': project} only %}
             {% endfor %}
 		</div>

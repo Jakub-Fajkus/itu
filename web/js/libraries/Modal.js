@@ -1,6 +1,7 @@
 import {getJSON} from "./ajax";
 import {forceJquery} from "./helpers";
 import Form from '../libraries/Form'
+import _ from 'lodash';
 
 const CLASS_HIDDEN = 'mw';
 const CLASS_SHOWN = CLASS_HIDDEN + 'mw--active';
@@ -11,6 +12,7 @@ export default class Modal {
     form = undefined;
     locked = false;
     lastLoaded = '';
+    deleteForm = undefined;
 
     constructor(wrapper, closers, container) {
         this.$wrapper = forceJquery(wrapper);
@@ -52,13 +54,12 @@ export default class Modal {
                 return responseData;
             });
         }
-        let fake = {then: ()=>fake, catch:()=>fake};
+        let fake = {then: () => fake, catch: () => fake};
         return fake;
     }
 
-    loadFormNow(url)
-    {
-        return this.load(url).then(()=> {
+    loadFormNow(url) {
+        return this.load(url).then(() => {
             this.setContent();
             this.show();
             return this.initForm();
@@ -66,6 +67,16 @@ export default class Modal {
     }
 
     initForm() {
-        return this.form = new Form(this.$wrapper.find('form'), this);
+        this.deleteForm = undefined;
+        this.form = undefined;
+        let forms = this.$wrapper.find('form');
+        if (forms[0]) {
+            this.form = new Form(forms.eq(0), this);
+        }
+        if (forms[1]) {
+            this.deleteForm = new Form(forms.eq(1), this);
+        }
+
+        return this.form;
     }
 }

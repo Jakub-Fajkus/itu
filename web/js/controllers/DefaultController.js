@@ -80,6 +80,11 @@ export default class DefaultController extends BaseController {
                             me($new);
                         }
                     );
+                    modal.deleteForm.onSuccess(
+                        () => {
+                            $(this).closest('div[data-sort-name]').remove();
+                        }
+                    );
                 }
             );
         }
