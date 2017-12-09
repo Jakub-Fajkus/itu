@@ -159,12 +159,31 @@ class TaskController extends Controller
      */
     public function setCompletedActions(Request $request, Task $task)
     {
+        $em = $this->getDoctrine()->getManager();
+
         $data = json_decode($request->getContent(), true);
+
+        $emptyProject = $em->getRepository(Project::class)
+            ->findOneBy(['user' => $this->getUser(), 'isDefault' => true]);
 
         $completed = (bool)$data['completed'];
 
         $task->setCompleted($completed);
-        $em = $this->getDoctrine()->getManager();
+
+        $project = $task->getProject();
+        $tasks = $project->getTasks()->remove($task);
+        $tasks = $tasks->toArray();
+
+        if ($completed === true) {
+            //hotovy task dame na konec
+            $tasks[] = $task;
+        } else {
+            //nehotovy dame na zacatek
+            $tasks = array_unshift($tasks, $task);
+        }
+
+        $this->setTasksOrder($tasks, $project, $emptyProject);
+
 
         $em->persist($task);
         $em->flush();
