@@ -218,10 +218,10 @@ class TaskController extends Controller
             $em->remove($task);
             $em->flush();
 
-            return new JsonResponse(['status' => self::SUCCESS, 'flashMessage' => 'Úspěšně smazáno']);
+            return new JsonResponse(['status' => ProjectController::SUCCESS, 'flashMessage' => 'Úspěšně smazáno']);
         }
 
-        return new JsonResponse(['status' => self::ERROR, 'flashMessage' => 'Nepodařilo se smazat úkol']);
+        return new JsonResponse(['html' => '<h1>HHHH</h1>', 'status' => ProjectController::ERROR, 'flashMessage' => 'Nepodařilo se smazat úkol']);
     }
 
     /**
