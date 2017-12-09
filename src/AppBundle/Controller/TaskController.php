@@ -205,7 +205,7 @@ class TaskController extends Controller
     /**
      * Deletes a task entity.
      *
-     * @Route("/{id}", name="task_delete")
+     * @Route("/delete/{id}", name="task_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Task $task)
