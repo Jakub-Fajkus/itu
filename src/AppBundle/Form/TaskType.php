@@ -24,17 +24,15 @@ class TaskType extends AbstractType
         $now = new \DateTime();
         $currentYear = (int)$now->format('Y');
         $builder
-            ->add('name')
-            ->add('priority', ChoiceType::class, ['choices' => ['Nízká' => 0, 'Střední' => 1, 'Vysoká' => 2, 'Nejvyšší' => 3]])
+            ->add('name', null, ['label' => 'Jméno'])
+            ->add('priority', ChoiceType::class, ['label' => 'Priorita', 'choices' => ['Nízká' => 0, 'Střední' => 1, 'Vysoká' => 2, 'Nejvyšší' => 3]])
             ->add('due', TextType::class, [
                 'required' => false,
                 'attr'     => [
                     'data-type' => 'datetime',
                 ],
+                'label' => 'Splnit do'
             ])
-            ->add('project')
-            ->add('tags', EntityType::class, ['class' => Tag::class, 'multiple' => true, 'expanded' => 'true'])
-//            ->add('submit', SubmitType::class, ['label' => 'Upravit']);
             ;
 
         $builder->get('due')->addModelTransformer(new CallbackTransformer(
