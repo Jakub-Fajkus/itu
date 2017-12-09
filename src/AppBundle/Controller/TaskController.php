@@ -171,24 +171,28 @@ class TaskController extends Controller
         $task->setCompleted($completed);
 
         $project = $task->getProject();
-        $tasks = $project->getTasks()->remove($task);
+        $tasks = $project->getTasks();
+        $tasks->removeElement($task);
+
         $tasks = $tasks->toArray();
 
         if ($completed === true) {
             //hotovy task dame na konec
             $tasks[] = $task;
+            $msg = 'Označeno jako splněno';
         } else {
             //nehotovy dame na zacatek
-            $tasks = array_unshift($tasks, $task);
+            array_unshift($tasks, $task);
+            $msg = 'Označeno jako nesplněno';
+
         }
 
         $this->setTasksOrder($tasks, $project, $emptyProject);
 
-
         $em->persist($task);
         $em->flush();
 
-        return new JsonResponse(['flashMessage' => 'Označeno jako hotovo', 'status' => ProjectController::SUCCESS]);
+        return new JsonResponse(['flashMessage' => $msg, 'status' => ProjectController::SUCCESS]);
     }
 
 
