@@ -5,7 +5,10 @@
             {#TODO @DAVE přidat cursor pointer#}
             <span data-new-url="{{ path('task_new_form', {'id': project.id}) }}" class="btn--add"></span>
             {#TODO @DAVE třída btn--edit dělá tenhle element neklikatelnej#}
-            <span data-edit-url="{{ path('project_edit_form', {id: project.id}) }}" data-multipleSelector="editProject">edit</span>
+            {% if not project.default %}
+                {#nedovolime upravit vychozi projekt pro tasky bez projektu#}
+                <span data-edit-url="{{ path('project_edit_form', {id: project.id}) }}" data-multipleSelector="editProject">Upravit</span>
+            {% endif %}
         </div>
     </div>
 
