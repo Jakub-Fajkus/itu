@@ -159,7 +159,9 @@ class TaskController extends Controller
      */
     public function setCompletedActions(Request $request, Task $task)
     {
-        $completed = json_decode($request->getContent());
+        $data = json_decode($request->getContent(), true);
+
+        $completed = (bool)$data['completed'];
 
         $task->setCompleted($completed);
         $em = $this->getDoctrine()->getManager();
