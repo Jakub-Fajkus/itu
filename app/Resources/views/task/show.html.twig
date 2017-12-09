@@ -5,7 +5,7 @@
         <p class="ts__title">{{ task.name }}</p>
     </span>
 
-    <input type="checkbox" class="hidden" id="checkbox-{{ task.id }}" {% if task.completed %} checked {% endif %}>
+    <input data-multipleSelector="completeCheck" type="checkbox" class="hidden" id="checkbox-{{ task.id }}" {% if task.completed %} checked {% endif %}>
     <label for="checkbox-{{ task.id }}" class="ts__checkbox"></label>
 
     <div class="ts__adons">

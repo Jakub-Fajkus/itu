@@ -25199,7 +25199,7 @@ var DefaultController = function (_BaseController) {
                         var $new = $(response.html);
                         var $container = $('[data-sortgroup="projects"]');
                         if ($container.length) {
-                            $container.children.first().after($new);
+                            $container.children().first().after($new);
                         } else {
                             $container.append($new);
                         }
@@ -42585,9 +42585,7 @@ var Modal = function () {
         value: function loadFormNow(url) {
             var _this3 = this;
 
-            debugger;
             return this.load(url).then(function () {
-                debugger;
                 _this3.setContent();
                 _this3.show();
                 return _this3.initForm();
