@@ -42,6 +42,7 @@ class ProjectController extends Controller
         ]);
     }
 
+
     /**
      * @Route("/new-form", name="project_new_form")
      * @Method("GET")
@@ -61,7 +62,7 @@ class ProjectController extends Controller
      */
     public function getEditFormAction(Project $project)
     {
-        $form = $this->createForm(ProjectType::class, $project,  ['action' => $this->generateUrl('project_edit', ['id' => $project->getId()])]);
+        $form = $this->createForm(ProjectType::class, $project, ['action' => $this->generateUrl('project_edit', ['id' => $project->getId()])]);
 
         $html = $this->renderView('project/newForm.html.twig', ['form' => $form->createView()]);
 
@@ -83,10 +84,13 @@ class ProjectController extends Controller
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
 
+        $projects = $this->getDoctrine()->getRepository(Project::class)
+            ->findBy(['user' => $this->getUser()], ['order' => 'ASC']);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($project);
-            $em->flush();
+            $projects[] = $project;
+
+            $this->setProjectsOrder($projects);
 
             $html = $this->renderView('project/show.html.twig', ['project' => $project]);
 
@@ -248,12 +252,43 @@ class ProjectController extends Controller
             return $idsOrder[$a->getId()] <=> $idsOrder[$b->getId()];
         });
 
+        $this->setProjectsOrder($projects);
+    }
+
+    /**
+     * @param Project[] $projects
+     */
+    private function setProjectsOrder(array $projects)
+    {
+        $em = $this->getDoctrine()->getManager();
+
         $order = 0;
         foreach ($projects as $project) {
             $project->setOrder($order++);
             $em->persist($project);
         }
 
+        $em->flush();
+    }
+
+    /**
+     * @param Task[]  $tasks
+     * @param Project $project
+     * @param Project $emptyProject
+     */
+    public function setTasksOrder($tasks, $project, $emptyProject)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $order = 0;
+        foreach ($tasks as $task) {
+            $task->setOrder($order++);
+
+            $em->persist($task);
+            $em->persist($project);
+        }
+
+        $em->persist($emptyProject);
         $em->flush();
     }
 
@@ -313,15 +348,6 @@ class ProjectController extends Controller
             return $idsOrder[$a->getId()] <=> $idsOrder[$b->getId()];
         });
 
-        $order = 0;
-        foreach ($currentProjectTasks as $task) {
-            $task->setOrder($order++);
-
-            $em->persist($task);
-            $em->persist($project);
-        }
-
-        $em->persist($emptyProject);
-        $em->flush();
+        $this->setTasksOrder($currentProjectTasks, $project, $emptyProject);
     }
 }

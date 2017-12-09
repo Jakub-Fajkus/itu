@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Project;
 use AppBundle\Entity\Task;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -76,11 +77,15 @@ class TaskController extends Controller
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
+        $tasks = $task->getProject()->getTasks()->toArray();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($task);
-            $em->flush();
+            $emptyProject = $em->getRepository(Project::class)
+                ->findOneBy(['user' => $this->getUser(), 'isDefault' => true]);
+
+            $tasks[] = $task;
+            $this->setTasksOrder($tasks, $task->getProject(), $emptyProject);
 
             $html = $this->renderView('project/show.html.twig', ['project' => $task->getProject()]);
 
@@ -199,5 +204,26 @@ class TaskController extends Controller
             ->setAction($this->generateUrl('task_delete', ['id' => $task->getId()]))
             ->setMethod('DELETE')
             ->getForm();
+    }
+
+    /**
+     * @param Task[]  $tasks
+     * @param Project $project
+     * @param Project $emptyProject
+     */
+    public function setTasksOrder($tasks, $project, $emptyProject)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $order = 0;
+        foreach ($tasks as $task) {
+            $task->setOrder($order++);
+
+            $em->persist($task);
+            $em->persist($project);
+        }
+
+        $em->persist($emptyProject);
+        $em->flush();
     }
 }
