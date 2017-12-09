@@ -1,5 +1,6 @@
 import BaseController from './BaseController';
-import {replace} from "../libraries/helpers";
+import {forceJquery, replace} from "../libraries/helpers";
+import {postJSON} from "../libraries/ajax";
 
 export default class DefaultController extends BaseController {
     indexAction() {
@@ -15,7 +16,6 @@ export default class DefaultController extends BaseController {
                                 let $new = $(response.html);
                                 let $container = $('[data-sortgroup="projects"]');
                                 $container.append($new);
-
                                 dnd($new);
                                 ip($new);
                             }
@@ -33,6 +33,20 @@ export default class DefaultController extends BaseController {
         $parent.find('[data-sortgroup="tasks"]').find('li').dblclick(edit);
         $parent.find('[data-handle="project"]').dblclick(edit);
         $parent.find('[data-multipleSelector="editProject"]').click(edit);
+
+        $parent.find('[data-multipleSelector="completeCheck"]').change(
+            ({target}) => {
+                postJSON(target.getAttribute('data-url'), {completed: target.checked});
+
+                let $line = $(target).closest('[data-sort-name]'), $parent = $line.parent();
+                $line.detach();
+                if (target.checked) {
+                    $parent.append($line)
+                } else {
+                    $parent.prepend($line);
+                }
+            }
+        );
 
 
         $parent.find('[data-handle="project"]').find('[data-new-url]').click(function () {
