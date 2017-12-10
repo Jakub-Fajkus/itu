@@ -9,7 +9,7 @@
 				<a href="{{ path('hide_completed') }}"
                    data-hide="Skrýt vyřešené"
                    data-show="Zobrazit vyřešené"
-                >Skrýt vyřešené</a></li>
+                >{% if hideCompleted %}Zobrazit vyřešené {% else %}Skrýt vyřešené{% endif %}</a></li>
 			<li class="mm__item"><a href="{{ path('help') }}">Nápověda</a></li>
 		</ul>
 	</div>
