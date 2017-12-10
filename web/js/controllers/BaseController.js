@@ -82,6 +82,7 @@ export default class BaseController {
                             }
                         );
                 },
+                delay: 300,
                 ...definition.settings
             });
         });
