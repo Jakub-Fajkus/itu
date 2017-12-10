@@ -5,8 +5,8 @@
 		<ul class="mm">
 			<li class="mm__item"><a data-selector="addProject" data-new-url="{{ path('project_new_form') }}">Nový projekt</a></li>
 			<li class="mm__item"><a href="#">Nový úkol</a></li>
-			<li class="mm__item"><a href="#">Skrýt vyřešené</a></li>
-			<li class="mm__item"><a href="#">Nápověda</a></li>
+			<li class="mm__item" data-selector="hideCompleted"><a href="{{ path('hide_completed') }}">Skrýt vyřešené</a></li>
+			<li class="mm__item"><a href="{{ path('help') }}">Nápověda</a></li>
 		</ul>
 	</div>
 {% endblock %}

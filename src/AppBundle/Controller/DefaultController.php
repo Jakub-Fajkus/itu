@@ -30,6 +30,7 @@ class DefaultController extends Controller
             'jsController' => 'DefaultController',
             'jsAction' => 'indexAction',
             'projects' => $projects,
+            'hideCompleted' => $this->get('session')->get('hideCompleted', false)
         ]);
     }
 
@@ -61,6 +62,36 @@ class DefaultController extends Controller
             return new JsonResponse([], 404);
         }
     }
+
+
+    /**
+     * @Route("/hide-completed", name="hide_completed")
+     */
+    public function hideCompletedAction()
+    {
+        $session =  $this->get('session');
+
+        $hideCompletedProjects = !$session->get('hideCompleted', false);
+        $session->set('hideCompleted', $hideCompletedProjects);
+
+        if ($hideCompletedProjects) {
+            $msg = 'Hotové úkoly schovány';
+        } else {
+            $msg = 'Hotové úkoly zobrazeny';
+        }
+
+        return new JsonResponse(['flashMessage' => $msg, 'status' => ProjectController::SUCCESS]);
+    }
+
+
+    /**
+     * @Route("/napoveda", name="help")
+     */
+    public function helpAction()
+    {
+        return $this->render('default/help.html.twig');
+    }
+
 
     /**
      * Creates a new patient entity.

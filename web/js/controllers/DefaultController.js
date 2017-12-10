@@ -24,6 +24,12 @@ export default class DefaultController extends BaseController {
                 );
             }
         );
+        $(this.scopeElements.hideCompleted).click(
+            function () {
+                //todo @Risa
+                postJSON(target.getAttribute('data-url'));
+            }
+        );
     }
 
     _initProjects($parent = $('body')) {

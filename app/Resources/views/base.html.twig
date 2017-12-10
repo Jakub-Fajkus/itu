@@ -45,8 +45,8 @@
 		{% endif %}
 	</head>
 
-	<body>
-		<div class="page-wrapper">
+	<body {% if hideCompleted %} class="hide-completed" {% endif %} >
+		<div class="page-wrapper" >
 
 			<header class="header h">
 				<a href="{{ path('fos_user_security_logout') }}" title="Odhlásit se" class="btn--logout"></a>
