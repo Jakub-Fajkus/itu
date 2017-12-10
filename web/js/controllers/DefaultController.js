@@ -83,9 +83,11 @@ export default class DefaultController extends BaseController {
                 let $line = $(target).closest('[data-sort-name]'), $parent = $line.parent();
                 $line.detach();
                 if (target.checked) {
-                    $parent.append($line)
+                    $parent.append($line);
+                    $(target).closest('li').addClass('ts--completed');
                 } else {
                     $parent.prepend($line);
+                    $(target).closest('li').removeClass('ts--completed');
                 }
             }
         );

@@ -17,7 +17,7 @@ export function flashMessage(text, status = 'success') {
         {
             $wrap.addClass(CLASS_HIDDEN);
         }
-    }, 10*1000);
+    }, 3*1000);
 }
 
 export function replace($el, $new) {
