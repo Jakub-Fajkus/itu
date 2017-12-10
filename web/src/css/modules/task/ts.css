@@ -16,7 +16,7 @@ $(el) {
   &__title {
     position: relative;
     overflow: hidden;
-    margin: 0 30px 8px 0;
+    margin: 0 60px 8px 0;
     padding: 6px;
     cursor: pointer;
     white-space: nowrap;
@@ -60,29 +60,50 @@ $(el) {
     }
   }
 
+  span.btn--edit {
+    position: absolute;
+    top: 42px;
+    right: 9px;
+    width: 23px;
+    transition: .3s;
+    opacity: .5;
+    filter: grayscale(100%);
+
+    &:hover {
+      opacity: .7;
+      filter: grayscale(10%);
+    }
+  }
+
   &__checkbox {
     position: absolute;
-    top: 9px;
+    top: 6px;
     right: 4px;
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
     border: 1px solid #e4e4e4;
-    border-radius: 14px;
+    border-radius: 30px;
     background-color: #fff;
 
     &:after {
       content: "\2713";
       display: block;
-      margin: 3px 0;
-      font-size: 18px;
+      margin: 5px 0;
+      font-size: 22px;
+      transition: .3s;
       text-align: center;
       color: #e8e8e8;
+    }
+
+    &:hover:after {
+      color: #ababab;
     }
   }
 
   &__adons {
     position: relative;
+    margin-right: 30px;
     padding-top: 4px;
 
     &:after {

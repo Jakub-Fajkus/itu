@@ -15,8 +15,8 @@ button[type=submit] {
 
 button[type=submit].delete {
   float: left;
-  font-size: 14px;
-  background: #bb0505;
   padding: 8px 12px;
+  font-size: 14px;
   color: #fff;
+  background: #bb0505;
 }

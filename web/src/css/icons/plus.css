@@ -10,8 +10,8 @@
 .btn--add:before {
   content: '';
   display: block;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   background: svg-load('./../../svg/plus.svg'), linear-gradient(transparent, transparent);
   background-size: cover;
 }

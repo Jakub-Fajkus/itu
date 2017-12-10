@@ -11,26 +11,20 @@ $(el) {
   }
 
   &__msg {
+    position: relative;
+    min-height: 68px;
     margin: 10px 0;
-    padding: 12px;
+    padding: 12px 12px 12px 50px;
     font-size: 14px;
     font-weight: 600;
     line-height: 22px;
+    background-color: #e0e0e0;
+    box-shadow: 1px 1px 1px 1px #0000002e;
 
-    &--success {
-      background-color: rgb(22, 236, 0);
-    }
-
-    &--info{
-      background-color: rgba(0, 134, 236, 0.9);
-    }
-
-    &--error {
-      background-color:rgba(236, 0, 0, 0.85);
-    }
-
-    &--warning {
-      background-color: rgba(236, 134, 0, 0.95);
+    &:before {
+      position: absolute;
+      top: 14px;
+      left: 10px;
     }
   }
 }

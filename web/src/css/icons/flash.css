@@ -1,0 +1,22 @@
+.fl__msg--success:before, .fl__msg--info:before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 32px;
+  background: svg-load('./../../svg/notify.svg'), linear-gradient(transparent, transparent);
+  background-size: cover;
+}
+
+.fl__msg--success:before {
+  background-position: 0 32px;
+}
+
+
+.fl__msg--warning:before, .fl__msg--error:before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 32px;
+  background: svg-load('./../../svg/warning.svg'), linear-gradient(transparent, transparent);
+  background-size: cover;
+}

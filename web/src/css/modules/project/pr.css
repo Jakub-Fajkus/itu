@@ -56,14 +56,14 @@ $(el) {
     }
 
     .btn--add {
-      width: 23px;
+      width: 25px;
       transition: .3s;
       opacity: .9;
       filter: grayscale(100%);
     }
 
     .btn--edit {
-      width: 23px;
+      width: 25px;
       transition: .3s;
       opacity: .7;
       filter: grayscale(100%);
