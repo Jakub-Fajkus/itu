@@ -24,13 +24,17 @@ class DefaultController extends Controller
         $projects = $this->getDoctrine()->getRepository(Project::class)
             ->findBy(['user' => $this->getUser()], ['order' => 'ASC']);
 
+        $emptyProject = $this->getDoctrine()->getManager()->getRepository(Project::class)
+            ->findOneBy(['user' => $this->getUser(), 'isDefault' => true]);
+
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
             'jsController' => 'DefaultController',
             'jsAction' => 'indexAction',
             'projects' => $projects,
-            'hideCompleted' => $this->get('session')->get('hideCompleted', false)
+            'hideCompleted' => $this->get('session')->get('hideCompleted', false),
+            'emptyProject' => $emptyProject
         ]);
     }
 

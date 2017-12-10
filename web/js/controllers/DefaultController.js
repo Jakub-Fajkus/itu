@@ -54,6 +54,7 @@ export default class DefaultController extends BaseController {
             }
         );
 
+        //todo: @Risa - to stejne se musi udelat po kliku na "novy ukol" v menu - tj. pridat ukol do projektu "Bez projektu"
 
         $parent.find('[data-handle="project"]').find('[data-new-url]').click(function () {
             modal.loadFormNow(this.getAttribute('data-new-url')).then(
