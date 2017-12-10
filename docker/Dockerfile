@@ -41,8 +41,5 @@ RUN pecl install xdebug \
 #prepiseme defaultni apache config
 RUN cat docker/apache2.conf > /etc/apache2/apache2.conf
 
-RUN mkdir /var/lib/php && mkdir /var/lib/php/sessions && chmod -R 777 /var/lib/php/sessions
+RUN mkdir /var/lib/php && mkdir /var/lib/php/sessions && chmod -R 777 /var/lib/php/sessions && chmod -R 777 var && chmod -R 777 bin
 
-EXPOSE 80
-
-#ENTRYPOINT ["sh", "docker/entrypoint.sh"]

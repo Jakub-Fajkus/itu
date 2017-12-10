@@ -9,6 +9,16 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: cs
+    database_host: mysql
+    database_port: 3306
+    database_name: symfony
+    database_user: user
+    database_password: pass
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: todo
+    mailer_password: todo
+    secret: 2aa0a682d38de2e3a7bb0901fc39ac9752ebf47b
 
 framework:
     #esi: ~
