@@ -32,7 +32,7 @@
             {% endfor %}
         </div>
         <div id="container" data-sortGroup="projects"
-             data-sortable="{{ {url:path('project_reorder') , settings: {placeholder: 'ui-state-highlight', handle: '[data-handle="project"]'} }|json_encode }}">
+             data-sortable="{{ {url:path('project_reorder') , settings: {placeholder: 'ui-state-highlight', handle: '.pr__title'} }|json_encode }}">
             {% for project in projects[1:] %}
                 {% include "project/show.html.twig" with {'project': project} only %}
             {% endfor %}

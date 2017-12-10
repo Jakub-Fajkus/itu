@@ -1,6 +1,7 @@
 import BaseController from './BaseController';
 import {forceJquery, replace} from "../libraries/helpers";
 import {postJSON, getJSON} from "../libraries/ajax";
+import _ from "lodash";
 
 export default class DefaultController extends BaseController {
     indexAction() {
@@ -8,7 +9,7 @@ export default class DefaultController extends BaseController {
 
         let modal = this.modal, dnd = (p) => this._initDND(p), ip = (p) => this._initProjects(p);
         let globalProjectWrapper = this.scopeElements.globalProjectWrapper;
-        $(this.scopeElements.addGlobalTask).click(
+        $(this.scopeElements.addGlobalTask).on('click touchend',
             function (e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -32,7 +33,7 @@ export default class DefaultController extends BaseController {
             }
         );
 
-        $(this.scopeElements.addProject).click(
+        $(this.scopeElements.addProject).on('click touchend',
             function (e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -52,7 +53,7 @@ export default class DefaultController extends BaseController {
                 );
             }
         );
-        $(this.scopeElements.hideCompleted).click(
+        $(this.scopeElements.hideCompleted).on('click touchend',
             e => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -79,38 +80,21 @@ export default class DefaultController extends BaseController {
         $parent.find('[data-handle="project"]').dblclick(edit);
         $parent.find('[data-multipleSelector="editProject"]').click(edit);
 
-        var tapped=false;
-        $parent.find('[data-sortgroup="tasks"]').find('li').on("touchstart",function(e){
-            if(!tapped){ //if tap is not set, set up single tap
-                tapped=setTimeout(function(){
-                    tapped=null
-                    //insert things you want to do when single tapped
-                },300);   //wait 300ms then run single click code
-            } else {    //tapped within 300ms of last tap. double tap
-                clearTimeout(tapped); //stop single tap callback
-                tapped=null;
-                //insert things you want to do when double tapped
-                edit(e);
-            }
-            e.preventDefault()
-        });
-
-
-        $parent.find('[data-multipleSelector="completeCheck"]').change(
-            ({target}) => {
-                postJSON(target.getAttribute('data-url'), {completed: target.checked});
-
-                let $line = $(target).closest('[data-sort-name]'), $parent = $line.parent();
-                $line.detach();
-                if (target.checked) {
-                    $parent.append($line);
-                    $(target).closest('li').addClass('ts--completed');
-                } else {
-                    $parent.prepend($line);
-                    $(target).closest('li').removeClass('ts--completed');
-                }
-            }
-        );
+        // $parent.find('[data-multipleSelector="completeCheck"]').change(
+        //     ({target}) => {
+        //         postJSON(target.getAttribute('data-url'), {completed: target.checked});
+        //
+        //         let $line = $(target).closest('[data-sort-name]'), $parent = $line.parent();
+        //         $line.detach();
+        //         if (target.checked) {
+        //             $parent.append($line);
+        //             $(target).closest('li').addClass('ts--completed');
+        //         } else {
+        //             $parent.prepend($line);
+        //             $(target).closest('li').removeClass('ts--completed');
+        //         }
+        //     }
+        // );
         $parent.find('[data-handle="project"]').find('[data-new-url]').click(function (e) {
             e.preventDefault();
             e.stopPropagation();
@@ -132,8 +116,32 @@ export default class DefaultController extends BaseController {
             );
         });
 
+        _.each($parent.find('[data-multipleSelector="completeCheck"]'), (el) => {
+            $("label[for='"+el.id+"']").on('click', (e) => {
 
-        function edit() {
+                e.stopPropagation();
+                e.preventDefault();
+                el.checked = !el.checked;
+                let target = el;
+                postJSON(target.getAttribute('data-url'), {completed: target.checked});
+
+                let $line = $(target).closest('[data-sort-name]'), $parent = $line.parent();
+                $line.detach();
+                if (target.checked) {
+                    $parent.append($line);
+                    $(target).closest('li').addClass('ts--completed');
+                } else {
+                    $parent.prepend($line);
+                    $(target).closest('li').removeClass('ts--completed');
+                }
+            })
+        });
+
+        function edit(e) {
+
+            if(e.target.nodeName === 'LABEL') return;
+            e.preventDefault();
+            e.stopPropagation();
             modal.loadFormNow(this.getAttribute('data-edit-url')).then(
                 (form) => {
                     form.onSuccess(
