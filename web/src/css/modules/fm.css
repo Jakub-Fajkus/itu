@@ -39,6 +39,10 @@ textarea {
   resize: none;
 }
 
+select {
+  cursor: pointer;
+}
+
 input[type=checkbox], input[type=radio] {
   display: none;
 }
