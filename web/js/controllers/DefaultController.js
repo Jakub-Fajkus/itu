@@ -7,6 +7,30 @@ export default class DefaultController extends BaseController {
         this._initProjects();
 
         let modal = this.modal, dnd = (p) => this._initDND(p), ip = (p) => this._initProjects(p);
+        let globalProjectWrapper = this.scopeElements.globalProjectWrapper;
+        $(this.scopeElements.addGlobalTask).click(
+            function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                modal.loadFormNow(this.getAttribute('data-new-url')).then(
+                    (form) => {
+                        let $project = $(globalProjectWrapper).first(),
+                            projectId = $project.attr('data-sort-name');
+                        form.$formElement.find('#appbundle_task_project').val(`${projectId}`);
+
+                        form.onSuccess(
+                            (response) => {
+                                let $new = $(response.html);
+                                replace($project, $new);
+                                dnd($new);
+                                ip($new);
+                            }
+                        );
+                    }
+                );
+            }
+        );
+
         $(this.scopeElements.addProject).click(
             function (e) {
                 e.preventDefault();
@@ -53,9 +77,7 @@ export default class DefaultController extends BaseController {
         $parent.find('[data-multipleSelector="editProject"]').click(edit);
 
         $parent.find('[data-multipleSelector="completeCheck"]').change(
-            ({target, preventDefault, stopPropagation}) => {
-                preventDefault();
-                stopPropagation();
+            ({target}) => {
                 postJSON(target.getAttribute('data-url'), {completed: target.checked});
 
                 let $line = $(target).closest('[data-sort-name]'), $parent = $line.parent();
@@ -67,9 +89,6 @@ export default class DefaultController extends BaseController {
                 }
             }
         );
-
-        //todo: @Risa - to stejne se musi udelat po kliku na "novy ukol" v menu - tj. pridat ukol do projektu "Bez projektu"
-
         $parent.find('[data-handle="project"]').find('[data-new-url]').click(function (e) {
             e.preventDefault();
             e.stopPropagation();

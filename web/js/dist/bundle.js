@@ -42287,6 +42287,24 @@ var DefaultController = function (_BaseController) {
                 ip = function ip(p) {
                 return _this2._initProjects(p);
             };
+            var globalProjectWrapper = this.scopeElements.globalProjectWrapper;
+            $(this.scopeElements.addGlobalTask).click(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                modal.loadFormNow(this.getAttribute('data-new-url')).then(function (form) {
+                    var $project = $(globalProjectWrapper).first(),
+                        projectId = $project.attr('data-sort-name');
+                    form.$formElement.find('#appbundle_task_project').val("" + projectId);
+
+                    form.onSuccess(function (response) {
+                        var $new = $(response.html);
+                        (0, _helpers.replace)($project, $new);
+                        dnd($new);
+                        ip($new);
+                    });
+                });
+            });
+
             $(this.scopeElements.addProject).click(function (e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -42335,12 +42353,8 @@ var DefaultController = function (_BaseController) {
             $parent.find('[data-multipleSelector="editProject"]').click(edit);
 
             $parent.find('[data-multipleSelector="completeCheck"]').change(function (_ref) {
-                var target = _ref.target,
-                    preventDefault = _ref.preventDefault,
-                    stopPropagation = _ref.stopPropagation;
+                var target = _ref.target;
 
-                preventDefault();
-                stopPropagation();
                 (0, _ajax.postJSON)(target.getAttribute('data-url'), { completed: target.checked });
 
                 var $line = $(target).closest('[data-sort-name]'),
@@ -42352,9 +42366,6 @@ var DefaultController = function (_BaseController) {
                     $parent.prepend($line);
                 }
             });
-
-            //todo: @Risa - to stejne se musi udelat po kliku na "novy ukol" v menu - tj. pridat ukol do projektu "Bez projektu"
-
             $parent.find('[data-handle="project"]').find('[data-new-url]').click(function (e) {
                 var _this4 = this;
 

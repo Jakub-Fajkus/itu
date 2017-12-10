@@ -1,12 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block menu %}
-		<div class="mm__wrapper">
-		<ul class="mm">
-			<li class="mm__item"><a data-selector="addProject" data-new-url="{{ path('project_new_form') }}">Nový projekt</a></li>
-			<li class="mm__item"><a data-new-url="{{ path('task_new_form', {'id': emptyProject.id}) }}" href="{{ path('task_new_form', {'id': emptyProject.id}) }}">Nový úkol</a></li>
-			<li class="mm__item" data-selector="hideCompleted">
-				<a href="{{ path('hide_completed') }}"
+    <div class="mm__wrapper">
+        <ul class="mm">
+            <li class="mm__item">
+                <a data-multipleSelector="addProject" data-new-url="{{ path('project_new_form') }}">
+                    Nový projekt
+                </a>
+            </li>
+            <li class="mm__item">
+                <a data-selector="addGlobalTask" data-new-url="{{ path('task_new_form', {'id': emptyProject.id}) }}"
+                                    href="{{ path('task_new_form', {'id': emptyProject.id}) }}">
+                    Nový úkol
+                </a>
+            </li>
+            <li class="mm__item" data-selector="hideCompleted">
+                <a href="{{ path('hide_completed') }}"
                    data-hide="Skrýt vyřešené"
                    data-show="Zobrazit vyřešené"
                 >{% if hideCompleted %}Zobrazit vyřešené {% else %}Skrýt vyřešené{% endif %}</a></li>
@@ -16,20 +25,22 @@
 {% endblock %}
 
 {% block body %}
-	<div id="wrapper">
-		<div id="container">
+    <div id="wrapper">
+        <div id="container" data-selector="globalProjectWrapper">
             {% for project in projects[0:1] %}
                 {% include "project/show.html.twig" with {'project': project} only %}
             {% endfor %}
-		</div>
-		<div id="container" data-sortGroup="projects" data-sortable="{{ {url:path('project_reorder') , settings: {placeholder: 'ui-state-highlight', handle: '[data-handle="project"]'} }|json_encode }}">
+        </div>
+        <div id="container" data-sortGroup="projects"
+             data-sortable="{{ {url:path('project_reorder') , settings: {placeholder: 'ui-state-highlight', handle: '[data-handle="project"]'} }|json_encode }}">
             {% for project in projects[1:] %}
-				{% include "project/show.html.twig" with {'project': project} only %}
+                {% include "project/show.html.twig" with {'project': project} only %}
             {% endfor %}
-		</div>
-	</div>
+        </div>
+    </div>
 
-	<div class="add_wrapper">
-		<button data-selector="addProject" data-new-url="{{ path('project_new_form') }}" class="btn--fixed-add"></button>
-	</div>
+    <div class="add_wrapper">
+        <button data-multipleSelector="addProject" data-new-url="{{ path('project_new_form') }}"
+                class="btn--fixed-add"></button>
+    </div>
 {% endblock %}
