@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <ul data-sortGroup="tasks" class="pr__content" data-sortable="{{ {url:path('project_reorder_tasks', {'id': project.id}) , settings: {placeholder: 'ui-state-highlight', handle: '.ts__title'} }|json_encode }}">
+    <ul data-sortGroup="tasks" class="pr__content" style="min-height: 1em" data-sortable="{{ {url:path('project_reorder_tasks', {'id': project.id}) , settings: {placeholder: 'ui-state-highlight', handle: '.ts__title'} }|json_encode }}">
         {% set completed = {} %}
         {% for task in project.tasks %}
             {% if task.completed %}
