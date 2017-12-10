@@ -45,7 +45,7 @@
 		{% endif %}
 	</head>
 
-	<body {% if hideCompleted %} class="hide-completed" {% endif %} >
+	<body {% if hideCompleted is defined and hideCompleted %} class="hide-completed" {% endif %} >
 		<div class="page-wrapper" >
 
 			<header class="header h">

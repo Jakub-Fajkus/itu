@@ -75,9 +75,9 @@ class DefaultController extends Controller
         $session->set('hideCompleted', $hideCompletedProjects);
 
         if ($hideCompletedProjects) {
-            $msg = 'Hotové úkoly schovány';
+            $msg = 'Vyřešené úkoly schovány';
         } else {
-            $msg = 'Hotové úkoly zobrazeny';
+            $msg = 'Vyřešené úkoly zobrazeny';
         }
 
         return new JsonResponse(['flashMessage' => $msg, 'status' => ProjectController::SUCCESS]);
