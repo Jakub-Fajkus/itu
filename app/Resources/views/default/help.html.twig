@@ -1,5 +1,15 @@
 {% extends('base.html.twig') %}
 
+{% block menu %}
+    <div class="mm__wrapper">
+        <ul class="mm">
+            <li class="mm__item">
+                <a href="{{ path('homepage') }}">Zpět</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
 {% block body %}
     <h1>Help!!!</h1>
 {% endblock %}

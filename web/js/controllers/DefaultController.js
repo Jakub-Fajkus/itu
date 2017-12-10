@@ -12,6 +12,7 @@ export default class DefaultController extends BaseController {
             function (e) {
                 e.preventDefault();
                 e.stopPropagation();
+                $('#mm-toogler__input')[0].checked = false;
                 modal.loadFormNow(this.getAttribute('data-new-url')).then(
                     (form) => {
                         let $project = $(globalProjectWrapper).first(),
@@ -35,6 +36,7 @@ export default class DefaultController extends BaseController {
             function (e) {
                 e.preventDefault();
                 e.stopPropagation();
+                $('#mm-toogler__input')[0].checked = false;
                 modal.loadFormNow(this.getAttribute('data-new-url')).then(
                     (form) => {
                         form.onSuccess(
@@ -54,6 +56,7 @@ export default class DefaultController extends BaseController {
             e => {
                 e.preventDefault();
                 e.stopPropagation();
+                $('#mm-toogler__input')[0].checked = false;
                 getJSON(e.target.href);
                 let $body = $('body');
                 if ($body.hasClass('hide-completed')) {
@@ -75,6 +78,23 @@ export default class DefaultController extends BaseController {
         $parent.find('[data-sortgroup="tasks"]').find('li').dblclick(edit);
         $parent.find('[data-handle="project"]').dblclick(edit);
         $parent.find('[data-multipleSelector="editProject"]').click(edit);
+
+        var tapped=false;
+        $parent.find('[data-sortgroup="tasks"]').find('li').on("touchstart",function(e){
+            if(!tapped){ //if tap is not set, set up single tap
+                tapped=setTimeout(function(){
+                    tapped=null
+                    //insert things you want to do when single tapped
+                },300);   //wait 300ms then run single click code
+            } else {    //tapped within 300ms of last tap. double tap
+                clearTimeout(tapped); //stop single tap callback
+                tapped=null;
+                //insert things you want to do when double tapped
+                edit(e);
+            }
+            e.preventDefault()
+        });
+
 
         $parent.find('[data-multipleSelector="completeCheck"]').change(
             ({target}) => {
