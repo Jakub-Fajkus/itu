@@ -68,9 +68,7 @@ export default class Form {
                     this._onSuccess(data);
                 },
                 data: new FormData(this.formElement),
-                error: (XMLHttpRequest, textStatus, errorThrown) => {
-                    // console.error(data);
-                }
+                error: (XMLHttpRequest, textStatus, errorThrown) => {}
             });
         });
     }

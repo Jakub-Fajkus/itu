@@ -3,7 +3,7 @@
     <p class="ts__title" title="upravit">{{ task.name }}</p>
 
     <input data-multipleSelector="completeCheck" data-url="{{ path('task_set_completed', {id: task.id}) }}" type="checkbox" class="hidden" id="checkbox-{{ task.id }}" {% if task.completed %} checked {% endif %}>
-    <span data-edit-url="{{ path('task_edit_form', {'id': task.id}) }}" data-multipleselector="editProject" class="btn--edit"></span>
+    {#<span data-edit-url="{{ path('task_edit_form', {'id': task.id}) }}" data-multipleselector="editProject" class="btn--edit"></span>#}
     <label for="checkbox-{{ task.id }}" class="ts__checkbox"></label>
 
     <div class="ts__adons">

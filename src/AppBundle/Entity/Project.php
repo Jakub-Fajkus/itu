@@ -37,7 +37,7 @@ class Project
     /**
      * @var ArrayCollection
      *
-     * @OneToMany(targetEntity="AppBundle\Entity\Task", mappedBy="project", orphanRemoval=true, cascade={"remove"})
+     * @OneToMany(targetEntity="AppBundle\Entity\Task", mappedBy="project", cascade={"remove"})
      * @ORM\OrderBy({"order" = "ASC"})
      */
     private $tasks;

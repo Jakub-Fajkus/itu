@@ -42250,6 +42250,10 @@ var _helpers = __webpack_require__(64);
 
 var _ajax = __webpack_require__(92);
 
+var _lodash = __webpack_require__(127);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42282,7 +42286,7 @@ var DefaultController = function (_BaseController) {
                 return _this2._initProjects(p);
             };
             var globalProjectWrapper = this.scopeElements.globalProjectWrapper;
-            $(this.scopeElements.addGlobalTask).click(function (e) {
+            $(this.scopeElements.addGlobalTask).on('click touch', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 $('#mm-toogler__input')[0].checked = false;
@@ -42300,7 +42304,7 @@ var DefaultController = function (_BaseController) {
                 });
             });
 
-            $(this.scopeElements.addProject).click(function (e) {
+            $(this.scopeElements.addProject).on('click touch', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 $('#mm-toogler__input')[0].checked = false;
@@ -42314,7 +42318,7 @@ var DefaultController = function (_BaseController) {
                     });
                 });
             });
-            $(this.scopeElements.hideCompleted).click(function (e) {
+            $(this.scopeElements.hideCompleted).on('click touch', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 $('#mm-toogler__input')[0].checked = false;
@@ -42367,22 +42371,21 @@ var DefaultController = function (_BaseController) {
                 e.preventDefault();
             });
 
-            $parent.find('[data-multipleSelector="completeCheck"]').change(function (_ref) {
-                var target = _ref.target;
-
-                (0, _ajax.postJSON)(target.getAttribute('data-url'), { completed: target.checked });
-
-                var $line = $(target).closest('[data-sort-name]'),
-                    $parent = $line.parent();
-                $line.detach();
-                if (target.checked) {
-                    $parent.append($line);
-                    $(target).closest('li').addClass('ts--completed');
-                } else {
-                    $parent.prepend($line);
-                    $(target).closest('li').removeClass('ts--completed');
-                }
-            });
+            // $parent.find('[data-multipleSelector="completeCheck"]').change(
+            //     ({target}) => {
+            //         postJSON(target.getAttribute('data-url'), {completed: target.checked});
+            //
+            //         let $line = $(target).closest('[data-sort-name]'), $parent = $line.parent();
+            //         $line.detach();
+            //         if (target.checked) {
+            //             $parent.append($line);
+            //             $(target).closest('li').addClass('ts--completed');
+            //         } else {
+            //             $parent.prepend($line);
+            //             $(target).closest('li').removeClass('ts--completed');
+            //         }
+            //     }
+            // );
             $parent.find('[data-handle="project"]').find('[data-new-url]').click(function (e) {
                 var _this4 = this;
 
@@ -42402,9 +42405,32 @@ var DefaultController = function (_BaseController) {
                 });
             });
 
-            function edit() {
+            _lodash2.default.each($parent.find('[data-multipleSelector="completeCheck"]'), function (el) {
+                $("label[for='" + el.id + "']").on('click touchstart', function (e) {
+
+                    e.stopPropagation();
+                    e.preventDefault();
+                    el.checked = !el.checked;
+                    var target = el;
+                    (0, _ajax.postJSON)(target.getAttribute('data-url'), { completed: target.checked });
+
+                    var $line = $(target).closest('[data-sort-name]'),
+                        $parent = $line.parent();
+                    $line.detach();
+                    if (target.checked) {
+                        $parent.append($line);
+                        $(target).closest('li').addClass('ts--completed');
+                    } else {
+                        $parent.prepend($line);
+                        $(target).closest('li').removeClass('ts--completed');
+                    }
+                });
+            });
+
+            function edit(e) {
                 var _this5 = this;
 
+                if (e.target.nodeName === 'LABEL') return;
                 modal.loadFormNow(this.getAttribute('data-edit-url')).then(function (form) {
                     form.onSuccess(function (response) {
                         var $new = $(response.html);
@@ -42539,7 +42565,6 @@ var BaseController = function () {
                             $el.sortable("option", { disabled: false });
                         });
                     }
-
                 }, definition.settings));
             });
         }
@@ -42778,9 +42803,7 @@ var Form = function () {
                     _this._onSuccess(data);
                 },
                 data: new FormData(_this.formElement),
-                error: function error(XMLHttpRequest, textStatus, errorThrown) {
-                    // console.error(data);
-                }
+                error: function error(XMLHttpRequest, textStatus, errorThrown) {}
             });
         });
     }
