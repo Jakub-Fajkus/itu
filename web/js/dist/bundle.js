@@ -42300,9 +42300,18 @@ var DefaultController = function (_BaseController) {
                     });
                 });
             });
-            $(this.scopeElements.hideCompleted).click(function () {
-                //todo @Risa
-                (0, _ajax.postJSON)(target.getAttribute('data-url'));
+            $(this.scopeElements.hideCompleted).click(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                (0, _ajax.getJSON)(e.target.href);
+                var $body = $('body');
+                if ($body.hasClass('hide-completed')) {
+                    $body.removeClass('hide-completed');
+                    e.target.innerHTML = e.target.getAttribute('data-hide');
+                } else {
+                    $body.addClass('hide-completed');
+                    e.target.innerHTML = e.target.getAttribute('data-show');
+                }
             });
         }
     }, {

@@ -1,6 +1,6 @@
 import BaseController from './BaseController';
 import {forceJquery, replace} from "../libraries/helpers";
-import {postJSON} from "../libraries/ajax";
+import {postJSON, getJSON} from "../libraries/ajax";
 
 export default class DefaultController extends BaseController {
     indexAction() {
@@ -27,9 +27,19 @@ export default class DefaultController extends BaseController {
             }
         );
         $(this.scopeElements.hideCompleted).click(
-            function () {
-                //todo @Risa
-                postJSON(target.getAttribute('data-url'));
+            e => {
+                e.preventDefault();
+                e.stopPropagation();
+                getJSON(e.target.href);
+                let $body = $('body');
+                if ($body.hasClass('hide-completed')) {
+                    $body.removeClass('hide-completed');
+                    e.target.innerHTML = e.target.getAttribute('data-hide');
+                }
+                else {
+                    $body.addClass('hide-completed');
+                    e.target.innerHTML = e.target.getAttribute('data-show');
+                }
             }
         );
     }
