@@ -16,7 +16,7 @@ $(el) {
   &__title {
     position: relative;
     overflow: hidden;
-    margin: 0 60px 8px 0;
+    margin: 0 40px 8px 0;
     padding: 6px;
     cursor: pointer;
     white-space: nowrap;
@@ -52,8 +52,6 @@ $(el) {
       &:after {
         content: "\2713";
         display: block;
-        margin: 3px 0;
-        font-size: 18px;
         text-align: center;
         color: #fff;
       }
