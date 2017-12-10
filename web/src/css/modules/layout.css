@@ -184,4 +184,14 @@ b, strong {
   }
 }
 
+.help {
+  color: $link-color;
+
+  &_wp {
+    display: block;
+    max-width: 560px;
+    margin: 20px 0;
+  }
+}
+
 

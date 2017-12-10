@@ -81,3 +81,31 @@ input[value="Vytvořit"] {
     border-left: solid 6px transparent;
   }
 }
+
+
+button[type=submit] {
+  float: right;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: .3s;
+  color: #fff;
+  border: 0 none;
+  border-radius: 2px;
+  background-color: $green-color;
+  box-shadow: 0px -1px 1px 1px #14ab08 inset;
+
+  &:hover {
+    background-color: #10a700;
+  }
+}
+
+button[type=submit].delete {
+  float: left;
+  background: #bb0505;
+
+  &:hover {
+    background-color: #820202;
+  }
+}
+
