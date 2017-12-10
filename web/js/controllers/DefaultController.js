@@ -8,7 +8,9 @@ export default class DefaultController extends BaseController {
 
         let modal = this.modal, dnd = (p) => this._initDND(p), ip = (p) => this._initProjects(p);
         $(this.scopeElements.addProject).click(
-            function () {
+            function (e) {
+                e.preventDefault();
+                e.stopPropagation();
                 modal.loadFormNow(this.getAttribute('data-new-url')).then(
                     (form) => {
                         form.onSuccess(
@@ -41,7 +43,9 @@ export default class DefaultController extends BaseController {
         $parent.find('[data-multipleSelector="editProject"]').click(edit);
 
         $parent.find('[data-multipleSelector="completeCheck"]').change(
-            ({target}) => {
+            ({target, preventDefault, stopPropagation}) => {
+                preventDefault();
+                stopPropagation();
                 postJSON(target.getAttribute('data-url'), {completed: target.checked});
 
                 let $line = $(target).closest('[data-sort-name]'), $parent = $line.parent();
@@ -56,7 +60,9 @@ export default class DefaultController extends BaseController {
 
         //todo: @Risa - to stejne se musi udelat po kliku na "novy ukol" v menu - tj. pridat ukol do projektu "Bez projektu"
 
-        $parent.find('[data-handle="project"]').find('[data-new-url]').click(function () {
+        $parent.find('[data-handle="project"]').find('[data-new-url]').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
             modal.loadFormNow(this.getAttribute('data-new-url')).then(
                 (form) => {
                     let $project = $(this).closest('div[data-sort-name]'),

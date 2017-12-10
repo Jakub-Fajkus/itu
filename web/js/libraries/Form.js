@@ -13,14 +13,13 @@ export default class Form {
         this.modal = modal;
         this.formElement = this.$formElement[0];
 
-        let $outElement = $('[data-type="datetime"]');
+        let $outElement = this.$formElement.find('[data-type="datetime"]');
         let dateVal = (+(new Date())),
             timeVal = 0;
         let oldDate = '', oldTime = '', oldVal = $outElement.val();
 
 
         if (oldVal && +!isNaN(oldVal)) {
-            console.log(+oldVal);
             let odt = moment(+oldVal * 1000);
             oldDate = `data-value="${odt.format('YYYY/MM/DD/')}"`;
             oldTime = `data-value="${odt.format('HH:mm')}"`;
@@ -63,13 +62,13 @@ export default class Form {
                 processData: false,
                 contentType: false,
                 url: this.formElement.action || '#',
-                success: (data) => {/*todo*/
+                success: (data) => {
                     if (data.flashMessage) flashMessage(data.flashMessage, data.status || 'success');
                     modal.hide();
                     this._onSuccess(data);
                 },
                 data: new FormData(this.formElement),
-                error: (XMLHttpRequest, textStatus, errorThrown) => {/*todo*/
+                error: (XMLHttpRequest, textStatus, errorThrown) => {
                     // console.error(data);
                 }
             });
