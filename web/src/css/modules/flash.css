@@ -12,9 +12,9 @@ $(el) {
 
   &__msg {
     position: relative;
-    min-height: 68px;
+    min-height: 58px;
     margin: 10px 0;
-    padding: 12px 12px 12px 50px;
+    padding: 18px 12px 12px 50px;
     font-size: 14px;
     font-weight: 600;
     line-height: 22px;
