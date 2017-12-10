@@ -42286,7 +42286,7 @@ var DefaultController = function (_BaseController) {
                 return _this2._initProjects(p);
             };
             var globalProjectWrapper = this.scopeElements.globalProjectWrapper;
-            $(this.scopeElements.addGlobalTask).on('click touch', function (e) {
+            $(this.scopeElements.addGlobalTask).on('click touchend', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 $('#mm-toogler__input')[0].checked = false;
@@ -42304,7 +42304,7 @@ var DefaultController = function (_BaseController) {
                 });
             });
 
-            $(this.scopeElements.addProject).on('click touch', function (e) {
+            $(this.scopeElements.addProject).on('click touchend', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 $('#mm-toogler__input')[0].checked = false;
@@ -42318,7 +42318,7 @@ var DefaultController = function (_BaseController) {
                     });
                 });
             });
-            $(this.scopeElements.hideCompleted).on('click touch', function (e) {
+            $(this.scopeElements.hideCompleted).on('click touchend', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 $('#mm-toogler__input')[0].checked = false;
@@ -42352,24 +42352,6 @@ var DefaultController = function (_BaseController) {
             $parent.find('[data-sortgroup="tasks"]').find('li').dblclick(edit);
             $parent.find('[data-handle="project"]').dblclick(edit);
             $parent.find('[data-multipleSelector="editProject"]').click(edit);
-
-            var tapped = false;
-            $parent.find('[data-sortgroup="tasks"]').find('li').on("touchstart", function (e) {
-                if (!tapped) {
-                    //if tap is not set, set up single tap
-                    tapped = setTimeout(function () {
-                        tapped = null;
-                        //insert things you want to do when single tapped
-                    }, 300); //wait 300ms then run single click code
-                } else {
-                    //tapped within 300ms of last tap. double tap
-                    clearTimeout(tapped); //stop single tap callback
-                    tapped = null;
-                    //insert things you want to do when double tapped
-                    edit(e);
-                }
-                e.preventDefault();
-            });
 
             // $parent.find('[data-multipleSelector="completeCheck"]').change(
             //     ({target}) => {
@@ -42406,7 +42388,7 @@ var DefaultController = function (_BaseController) {
             });
 
             _lodash2.default.each($parent.find('[data-multipleSelector="completeCheck"]'), function (el) {
-                $("label[for='" + el.id + "']").on('click touchstart', function (e) {
+                $("label[for='" + el.id + "']").on('click', function (e) {
 
                     e.stopPropagation();
                     e.preventDefault();
@@ -42431,6 +42413,8 @@ var DefaultController = function (_BaseController) {
                 var _this5 = this;
 
                 if (e.target.nodeName === 'LABEL') return;
+                e.preventDefault();
+                e.stopPropagation();
                 modal.loadFormNow(this.getAttribute('data-edit-url')).then(function (form) {
                     form.onSuccess(function (response) {
                         var $new = $(response.html);
